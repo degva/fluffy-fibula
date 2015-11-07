@@ -7,6 +7,7 @@ typedef struct {
   bool Running;
   SDL_Window* appWindow;
   SDL_Surface* appSurface;
+  TTF_Font * font;
 } CApp;
 
 void CApp_init(CApp * C);
