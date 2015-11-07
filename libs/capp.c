@@ -50,7 +50,7 @@ bool Game_OnInit(CApp * C) {
   }
 
   C->appWindow = SDL_CreateWindow(
-    "SDL2 Tutorial",
+    "Cualquier cosa",
     SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED,
     640, 480,
