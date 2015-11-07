@@ -32,8 +32,17 @@ int Game_OnExecute(CApp * C, TMap * M) {
   if (!Game_OnInit(C)) {
     return -1;
   }
-
+  // Create Event
   SDL_Event Event;
+  // Show Menu
+  while(C->Running) {
+    while(SDL_PollEvent(&Event)) {
+      Menu_OnEvent(C, &Event);
+      // loop for buttons:http://www.lazyfoo.net/tutorials/SDL/17_mouse_events/index.php
+    }
+    Menu_OnRender(C);
+  }
+  // Show Game
   while(C->Running) {
     while(SDL_PollEvent(&Event)) {
       Game_OnEvent(C, &Event);
@@ -63,6 +72,19 @@ bool Game_OnInit(CApp * C) {
   C->appSurface = SDL_GetWindowSurface(C->appWindow);
   if (C->appSurface == NULL) {
     return false;
+  }
+  
+  // Init font things
+  if (TTF_Init() < 0) {
+    return false;
+  }
+
+  // load Hack font
+  font = TTF_OpenFont("Hack.ttf", 16);
+  if (!font) {
+    printf("Couldn't load Hack font, %s\n", TTF_GetError());
+    TTF_Quit();
+    return false
   }
   return true;
 }
