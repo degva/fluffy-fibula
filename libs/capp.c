@@ -1,23 +1,5 @@
 #include <capp.h>
 
-/* Map Things */
-void _putTile(TMap * M, CApp * C, int x, int y, int w, int h) {
-  SDL_Rect dst;
-  dst.x = x;
-  dst.y = y;
-  dst.w = w;
-  dst.h = h;
-  SDL_BlitSurface(M->map_tile, NULL, C->appSurface, &dst);
-  SDL_UpdateWindowSurface( C->appWindow );
-}
-
-void TMap_Render(TMap * M, CApp * C) {
-  _putTile(M,C,10,10,15,15);
-  _putTile(M,C,10,25,15,15);
-  _putTile(M,C,25,10,15,15);
-  _putTile(M,C,25,25,15,15);
-}
-
 /* Game related functions */
 void CApp_init(CApp * C) {
   C->Running = true;
@@ -25,22 +7,28 @@ void CApp_init(CApp * C) {
 }
 
 void Game_OnRender(CApp * C, TMap * M) {
-  TMap_Render(M,C);
+  TMap_Render(M,C->appSurface);
+  SDL_UpdateWindowSurface( C->appWindow );
 }
 
 int Game_OnExecute(CApp * C, TMap * M) {
   if (!Game_OnInit(C)) {
     return -1;
   }
-  // Create Event
+  // Create Event and Menu
+  TMenu * menu;
+  menu = (TMenu *) malloc(sizeof(TMenu));
+  TMenu_init(menu);
   SDL_Event Event;
   // Show Menu
   while(C->Running) {
     while(SDL_PollEvent(&Event)) {
-      Menu_OnEvent(C, &Event);
+      TMenu_OnEvent(&Event, menu);
       // loop for buttons:http://www.lazyfoo.net/tutorials/SDL/17_mouse_events/index.php
     }
-    Menu_OnRender(C);
+    TMenu_OnRender(C->appSurface, C->font, menu);
+    // Show new graphs
+    SDL_UpdateWindowSurface( C->appWindow );
   }
   // Show Game
   while(C->Running) {
@@ -80,11 +68,11 @@ bool Game_OnInit(CApp * C) {
   }
 
   // load Hack font
-  font = TTF_OpenFont("Hack.ttf", 16);
-  if (!font) {
+  C->font = TTF_OpenFont("fonts/Hack.ttf", 16);
+  if (!C->font) {
     printf("Couldn't load Hack font, %s\n", TTF_GetError());
     TTF_Quit();
-    return false
+    return false;
   }
   return true;
 }

@@ -2,6 +2,7 @@
 #define _CAPP_H_
 
 #include <tmap.h>
+#include <menu.h>
 
 typedef struct {
   bool Running;
@@ -20,10 +21,5 @@ void Game_OnEvent(CApp * C, SDL_Event * Event);
 void Game_OnLoop(CApp * C);
 void Game_OnRender(CApp * C, TMap * map);
 void Game_OnCleanup();
-
-// Map Render related Functions
-
-void TMap_Render(TMap * M, CApp * C);
-void _putTile(TMap * M, CApp * C, int x, int y, int w, int h);
 
 #endif

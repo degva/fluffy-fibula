@@ -1,11 +1,10 @@
 #ifndef _TMENU_
 #define _TMENU_
 
-#include <capp.h>
+#include <tlibs.h>
 
 const int BUTTON_WIDTH = 200;
 const int BUTTON_HEIGHT = 100;
-const int TOTAL_BUTTONS = 4;
 
 enum LButtonSprite {
   BUTTON_SPRITE_MOUSE_OUT,
@@ -13,23 +12,46 @@ enum LButtonSprite {
   BUTTON_SPRITE_MOUSE_DOWN,
   BUTTON_SPRITE_MOUSE_UP,
   BUTTON_SPRITE_TOTAL
-}
+};
 
 // Button things...
 typedef struct {
   int pos_x;
   int pos_y;
   int currentSprite;
+  char * text;
   SDL_Surface * buttonText;
 } TButton;
 
 void TButton_init(TButton *);
+void TButton_loadText(TButton *, char*);
 void TButton_setPosition(TButton *, int x, int y);
 void TButton_handleEvent(TButton *, SDL_Event* e);
-void TButton_render(TButton *);
+void TButton_render(TButton *, TTF_Font *, SDL_Surface *);
+
+/* El menu consiste de un grupo de botones
+ * y fondos. Entonces, usaremos 2 botones para
+ * el menu:
+ *  - Iniciar
+ *  - Continuar
+ *  - Salir
+ *
+ *  Ademas, tiene fondos e imagenes
+ *  - Fondo
+ *  - Logo
+ */
+
+const int MENU_TOTAL_BUTTONS = 3;
+
+typedef struct {
+  TButton **buttons;
+  SDL_Surface * background;
+  SDL_Surface * logo;
+} TMenu;
 
 // Menu Functions
-void Menu_OnEvent(CApp *);
-void Menu_OnRender(CApp *);
+void TMenu_init(TMenu *);
+void TMenu_OnEvent(SDL_Event *, TMenu *);
+void TMenu_OnRender(SDL_Surface *, TTF_Font *, TMenu *);
 
 #endif
