@@ -1,5 +1,5 @@
 GCC=gcc
-CFLAGS=-g -Wall -Wextra
+CFLAGS=-g -Wall -Wextra -Wno-missing-field-initializers
 LINKER_FLAGS=-lSDL2
 
 LDIR=libs
