@@ -1,6 +1,7 @@
 GCC=gcc
-CFLAGS=-g -Wall -Wextra -Wno-missing-field-initializers
-LINKER_FLAGS=-lSDL2
+#CFLAGS=-g -Wall -Wextra
+CFLAGS=-g
+LINKER_FLAGS=-lSDL2 -lSDL2_ttf
 
 LDIR=libs
 ODIR=objs

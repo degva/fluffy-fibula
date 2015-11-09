@@ -2,9 +2,9 @@
 #define _TMENU_
 
 #include <tlibs.h>
-
-const int BUTTON_WIDTH = 200;
-const int BUTTON_HEIGHT = 100;
+#define BUTTON_WIDTH 200
+#define BUTTON_HEIGHT 100
+#define MENU_TOTAL_BUTTONS 3
 
 enum LButtonSprite {
   BUTTON_SPRITE_MOUSE_OUT,
@@ -23,8 +23,8 @@ typedef struct {
   SDL_Surface * buttonText;
 } TButton;
 
-void TButton_init(TButton *);
-void TButton_loadText(TButton *, char*);
+void TButton_init(TButton *, char *);
+//void TButton_loadText(TButton *, char*);
 void TButton_setPosition(TButton *, int x, int y);
 void TButton_handleEvent(TButton *, SDL_Event* e);
 void TButton_render(TButton *, TTF_Font *, SDL_Surface *);
@@ -41,8 +41,6 @@ void TButton_render(TButton *, TTF_Font *, SDL_Surface *);
  *  - Logo
  */
 
-const int MENU_TOTAL_BUTTONS = 3;
-
 typedef struct {
   TButton **buttons;
   SDL_Surface * background;
@@ -51,7 +49,7 @@ typedef struct {
 
 // Menu Functions
 void TMenu_init(TMenu *);
-void TMenu_OnEvent(SDL_Event *, TMenu *);
+bool TMenu_OnEvent(SDL_Event *, TMenu *);
 void TMenu_OnRender(SDL_Surface *, TTF_Font *, TMenu *);
 
 #endif

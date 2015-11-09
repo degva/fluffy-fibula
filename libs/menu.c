@@ -3,18 +3,20 @@
 /* Button functions */
 
 /* Inits a function */
-void TButton_init(TButton * B) {
-  B->text = NULL;
+void TButton_init(TButton * B, char * text) {
+  B->text = text;
   B->pos_x = 0;
   B->pos_y = 0;
   B->currentSprite = BUTTON_SPRITE_MOUSE_OUT;
   B->buttonText = NULL;
 }
 
+/*
 void TButton_loadText(TButton * B, char * text) {
   // Save text into the Button
   B->text = text;
 }
+*/
 
 void TButton_setPosition(TButton * B, int x, int y) {
   B->pos_x = x;
@@ -98,10 +100,24 @@ void TButton_render(TButton * B, TTF_Font * F, SDL_Surface * S) {
 void TMenu_init(TMenu * M) {
   // Iniciamos 3 botons primarios del menu
   // Init 3 primary buttons of the menu
-  M->buttons = malloc(sizeof(TButton *) * MENU_TOTAL_BUTTONS);
+  M->buttons = malloc(sizeof(TButton *) * 3);
+
+  TButton * bIniciar = malloc(sizeof(TButton));
+  TButton * bContinuar = malloc(sizeof(TButton));
+  TButton * bSalir = malloc(sizeof(TButton));
+
+  TButton_init(bIniciar, "Iniciar");
+  *(M->buttons) = bIniciar;
+  TButton_init(bIniciar, "Continuar");
+  *(M->buttons+1) = bContinuar;
+  TButton_init(bIniciar, "Salir");
+  *(M->buttons+2) = bSalir;
+
+  /*
   TButton_loadText(*(M->buttons), "Iniciar");
   TButton_loadText(*(M->buttons+1), "Continuar");
   TButton_loadText(*(M->buttons+2), "Salir");
+  */
 
   // Init background images of the menu
   M->background = SDL_LoadBMP( "img/background.bmp" );
@@ -110,12 +126,16 @@ void TMenu_init(TMenu * M) {
   // TODO handle errors in case the images doesn't load correctly
 }
 
-void TMenu_OnEvent(SDL_Event * e, TMenu * M) {
+bool TMenu_OnEvent(SDL_Event * e, TMenu * M) {
   // handle the three buttons
   int i;
   for (i=0; i<MENU_TOTAL_BUTTONS; i++) {
     TButton_handleEvent(*(M->buttons+i), e);
   }
+  if (e->type == SDL_QUIT) {
+    return false;
+  }
+  return true;
 }
 
 void TMenu_OnRender(SDL_Surface * S, TTF_Font * F, TMenu * M) {

@@ -2,7 +2,6 @@
 #define _CAPP_H_
 
 #include <tmap.h>
-#include <menu.h>
 
 typedef struct {
   bool Running;
