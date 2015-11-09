@@ -91,7 +91,12 @@ void TButton_render(TButton * B, TTF_Font * F, SDL_Surface * S) {
   // Create text surface
   //B->buttonText = TTF_RenderText_Solid(F, B->text, color);
   // Put it into the screen
-  SDL_BlitSurface(B->buttonText, NULL, S, NULL);
+  SDL_Rect * destRect;
+  destRect->x = B->pos_x;
+  destRect->y = B->pos_y;
+  destRect->w = BUTTON_WIDTH;
+  destRect->h = BUTTON_HEIGHT;
+  SDL_BlitSurface(B->buttonText, NULL, S, destRect);
   // Free Button Surface
   SDL_FreeSurface(B->buttonText);
 }
@@ -108,10 +113,14 @@ void TMenu_init(TMenu * M) {
 
   TButton_init(bIniciar, "Iniciar");
   *(M->buttons) = bIniciar;
-  TButton_init(bIniciar, "Continuar");
+  TButton_init(bContinuar, "Continuar");
   *(M->buttons+1) = bContinuar;
-  TButton_init(bIniciar, "Salir");
+  TButton_init(bSalir, "Salir");
   *(M->buttons+2) = bSalir;
+
+  TButton_setPosition(*(M->buttons), 480/2, 100);
+  TButton_setPosition(*(M->buttons+1), 480/2, 150);
+  TButton_setPosition(*(M->buttons+2), 480/2, 200);
 
   /*
   TButton_loadText(*(M->buttons), "Iniciar");

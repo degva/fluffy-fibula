@@ -2,8 +2,8 @@
 #define _TMENU_
 
 #include <tlibs.h>
-#define BUTTON_WIDTH 200
-#define BUTTON_HEIGHT 100
+#define BUTTON_WIDTH 100
+#define BUTTON_HEIGHT 20
 #define MENU_TOTAL_BUTTONS 3
 
 enum LButtonSprite {
