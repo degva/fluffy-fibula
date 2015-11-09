@@ -14,6 +14,12 @@ enum LButtonSprite {
   BUTTON_SPRITE_TOTAL
 };
 
+enum MenuItems {
+  START,
+  CONTINUE,
+  QUIT
+};
+
 // Button things...
 typedef struct {
   int pos_x;
@@ -45,11 +51,12 @@ typedef struct {
   TButton **buttons;
   SDL_Surface * background;
   SDL_Surface * logo;
+  bool Running;
 } TMenu;
 
 // Menu Functions
 void TMenu_init(TMenu *);
-bool TMenu_OnEvent(SDL_Event *, TMenu *);
+int TMenu_OnEvent(SDL_Event *, TMenu *);
 void TMenu_OnRender(SDL_Surface *, TTF_Font *, TMenu *);
 
 #endif

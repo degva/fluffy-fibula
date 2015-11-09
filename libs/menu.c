@@ -105,6 +105,7 @@ void TButton_render(TButton * B, TTF_Font * F, SDL_Surface * S) {
 void TMenu_init(TMenu * M) {
   // Iniciamos 3 botons primarios del menu
   // Init 3 primary buttons of the menu
+  M->Running = true;
   M->buttons = malloc(sizeof(TButton *) * 3);
 
   TButton * bIniciar = malloc(sizeof(TButton));
@@ -135,16 +136,27 @@ void TMenu_init(TMenu * M) {
   // TODO handle errors in case the images doesn't load correctly
 }
 
-bool TMenu_OnEvent(SDL_Event * e, TMenu * M) {
+int TMenu_OnEvent(SDL_Event * e, TMenu * M) {
   // handle the three buttons
-  int i;
+  int i, response;
+  response = -1;
   for (i=0; i<MENU_TOTAL_BUTTONS; i++) {
     TButton_handleEvent(*(M->buttons+i), e);
+    if ( ((TButton *) *(M->buttons+i))->currentSprite == BUTTON_SPRITE_MOUSE_DOWN ) {
+      switch (i) {
+        case START:
+          response = START;
+          break;
+        case QUIT:
+          response = QUIT;
+          break;
+      }
+    }
   }
   if (e->type == SDL_QUIT) {
-    return false;
+    response = QUIT;
   }
-  return true;
+  return response;
 }
 
 void TMenu_OnRender(SDL_Surface * S, TTF_Font * F, TMenu * M) {

@@ -10,6 +10,8 @@ void CApp_init(CApp * C) {
 void Game_OnRender(CApp * C, TMap * M) {
   TMap_Render(M,C->appSurface);
   SDL_UpdateWindowSurface( C->appWindow );
+  // Clear the screen
+  SDL_FillRect(C->appSurface,NULL,0);
 }
 
 int Game_OnExecute(CApp * C, TMap * M) {
@@ -22,14 +24,22 @@ int Game_OnExecute(CApp * C, TMap * M) {
   TMenu_init(menu);
   SDL_Event Event;
   // Show Menu
-  while(C->Running) {
+  while(menu->Running && C->Running) {
     while(SDL_PollEvent(&Event)) {
-      C->Running = TMenu_OnEvent(&Event, menu);
-      // loop for buttons:http://www.lazyfoo.net/tutorials/SDL/17_mouse_events/index.php
+      switch (TMenu_OnEvent(&Event, menu)) {
+        case START:
+          menu->Running = false;
+          break;
+        case QUIT:
+          C->Running = false;
+          break;
+      }
     }
     TMenu_OnRender(C->appSurface, C->font, menu);
     // Show new graphs
     SDL_UpdateWindowSurface( C->appWindow );
+    // Clear the screen
+    SDL_FillRect(C->appSurface,NULL,0);
   }
   // Show Game
   while(C->Running) {
