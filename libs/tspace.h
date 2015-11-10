@@ -1,7 +1,7 @@
 #ifndef _TSPACE_H_
 #define _TSPACE_H_
 
-#include <stdlib.h>
+#include <tlibs.h>
 // FIXME ver de usar tlibs.h y ademas de otro nombre para enemigos.h
 #include <enemigos.h>
 
@@ -14,13 +14,17 @@ enum tiposDeSpace {
     HILL = 4,
     SWAMP = 5,
     UNREACHABLE = 1000
-}
+};
+typedef struct {
+  int x;
+  int y;
+} TCoord;
 
 typedef struct _TSpace {
     bool descubierto;
     int tipoDeSpace;
     // este es el Tipo Entidad General en enemigos.h
-    TEntGen * relleno;
+    // TEntGen * relleno;
     struct _TSpace * spaces[MAXSPACES];
     SDL_Surface * surface;
 } TSpace;
@@ -33,7 +37,7 @@ void TSpace_init(TSpace * S);
 
 // hace un render en el Surface S
 // ver tmenu.c funcion TMenu_onRender() para ver funcionalidad
-void TSpace_render(TSpace * Ts, SDL_Surface * S);
+void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Surface * S);
 
 // Llamado por TMap_handleEvent
 void TSpace_changeBackground(TSpace * Ts, SDL_Surface * S);

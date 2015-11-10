@@ -9,12 +9,17 @@ BLD=builds
 
 
 #OBJS specifies which files to compile as part of the project 
-_OBJS = main.o capp.o tmap.o menu.o
+_OBJS = main.o capp.o menu.o tmap.o ttile.o tspace.o 
 OBJS=$(patsubst %,$(ODIR)/%,$(_OBJS))
 
 all: app
 
-$(ODIR)/tmap.o: $(LDIR)/tmap.c $(LDIR)/tmap.h
+
+$(ODIR)/tspace.o: $(LDIR)/tspace.c $(LDIR)/tspace.h
+	$(GCC) -c -o $@ $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
+$(ODIR)/ttile.o: $(LDIR)/ttiles.c $(LDIR)/ttiles.h $(ODIR)/tspace.o
+	$(GCC) -c -o $@ $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
+$(ODIR)/tmap.o: $(LDIR)/tmap.c $(LDIR)/tmap.h $(ODIR)/ttile.o
 	$(GCC) -c -o $@ $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
 
 $(ODIR)/menu.o: $(LDIR)/menu.c $(LDIR)/menu.h
