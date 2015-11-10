@@ -9,9 +9,6 @@ void CApp_init(CApp * C) {
 
 void Game_OnRender(CApp * C, TMap * M) {
   TMap_Render(M,C->appSurface);
-  SDL_UpdateWindowSurface( C->appWindow );
-  // Clear the screen
-  SDL_FillRect(C->appSurface,NULL,0);
 }
 
 int Game_OnExecute(CApp * C, TMap * M) {
@@ -48,6 +45,9 @@ int Game_OnExecute(CApp * C, TMap * M) {
     }
     //Game_OnLoop(C);
     Game_OnRender(C, M);
+    SDL_UpdateWindowSurface( C->appWindow );
+    // Clear the screen
+    SDL_FillRect(C->appSurface,NULL,0);
   }
   return 0;
 }

@@ -25,7 +25,7 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy) {
   // SPACE 1
   TCoord * coorT1 = malloc(sizeof(TCoord));
   coorT1->x = posx + SPACESIZE/2;
-  coorT1->y = posy + 1.2438*SPACESIZE;
+  coorT1->y = posy + 0.8*SPACESIZE;
   // SPACE 2
   TCoord * coorT2 = malloc(sizeof(TCoord));
   coorT2->x = posx + SPACESIZE;
@@ -33,11 +33,11 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy) {
   // SPACE 3
   TCoord * coorT3 = malloc(sizeof(TCoord));
   coorT3->x = posx + SPACESIZE/2;
-  coorT3->y = posy - 1.2438*SPACESIZE;
+  coorT3->y = posy - 0.8*SPACESIZE;
   // SPACE 4
   TCoord * coorT4 = malloc(sizeof(TCoord));
   coorT4->x = posx - SPACESIZE/2;
-  coorT4->y = posy - 1.2438*SPACESIZE;
+  coorT4->y = posy - 0.8*SPACESIZE;
   // SPACE 5
   TCoord * coorT5 = malloc(sizeof(TCoord));
   coorT5->x = posx - SPACESIZE;
@@ -45,7 +45,7 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy) {
   // SPACE 6
   TCoord * coorT6 = malloc(sizeof(TCoord));
   coorT6->x = posx - SPACESIZE/2;
-  coorT6->y = posy + 1.2438*SPACESIZE;
+  coorT6->y = posy + 0.8*SPACESIZE;
 
   // put Coordinates on the tiles
   M->coords[curTile][0] = coorT0;
@@ -91,6 +91,9 @@ void TMap_Render(TMap * M, SDL_Surface * S) {
   // Render each surface of each tile
   // Uses the coordinates to do this
   for (i=0; i<NUMBER_OF_TILES; i++) {
+    if (M->tiles[i] == NULL) {
+      break;
+    }
     TTiles_Render(M->tiles[i], S, M->coords[i]);
   }
 }
