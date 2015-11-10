@@ -11,38 +11,38 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy) {
   int curTile = M->currentTile;
   
   // Create tile
-  TTile * tile;
-  tile = malloc(sizeof(TTile));
-  TTile_init(tile);
+  TTiles * tile;
+  tile = malloc(sizeof(TTiles));
+  TTiles_init(tile);
   
   // this is the first tile ( the one in the center )
-  M->tiles[M->currentTile] = tile;
+  M->tiles[curTile] = tile;
   // put their coords
-  // TILE 0
+  // SPACE 0
   TCoord * coorT0 = malloc(sizeof(TCoord));
   coorT0->x = posx;
   coorT0->y = posy;
-  // TILE 1
+  // SPACE 1
   TCoord * coorT1 = malloc(sizeof(TCoord));
   coorT1->x = posx + SPACESIZE/2;
   coorT1->y = posy + 1.2438*SPACESIZE;
-  // TILE 2
+  // SPACE 2
   TCoord * coorT2 = malloc(sizeof(TCoord));
   coorT2->x = posx + SPACESIZE;
   coorT2->y = posy;
-  // TILE 3
+  // SPACE 3
   TCoord * coorT3 = malloc(sizeof(TCoord));
   coorT3->x = posx + SPACESIZE/2;
   coorT3->y = posy - 1.2438*SPACESIZE;
-  // TILE 4
+  // SPACE 4
   TCoord * coorT4 = malloc(sizeof(TCoord));
   coorT4->x = posx - SPACESIZE/2;
   coorT4->y = posy - 1.2438*SPACESIZE;
-  // TILE 5
+  // SPACE 5
   TCoord * coorT5 = malloc(sizeof(TCoord));
   coorT5->x = posx - SPACESIZE;
   coorT5->y = posy;
-  // TILE 6
+  // SPACE 6
   TCoord * coorT6 = malloc(sizeof(TCoord));
   coorT6->x = posx - SPACESIZE/2;
   coorT6->y = posy + 1.2438*SPACESIZE;

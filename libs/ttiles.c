@@ -18,12 +18,12 @@ void TTiles_init(TTiles * T) {
     // put the new space in the tile
     T->spaces[i] = newSpace;
     // Now interconect between the new and the cnetral
-    if (i == 1)
+    if (i == 1) {
       central->spaces[0] = newSpace;
       newSpace->spaces[0] = central;
       // now, point to the new space
       temp = newSpace;
-    else {
+    } else {
       // for the following spaces, put them 
       central->spaces[i] = newSpace;
       // now interconect this one with the one created before
@@ -35,11 +35,11 @@ void TTiles_init(TTiles * T) {
   }
 }
 
-void TTiles_Render(TTiles * T, TCoord * Tc[NUM_SPACES], SDL_Surface * S) {
+void TTiles_Render(TTiles * T, SDL_Surface * S, TCoord * Tc[NUM_SPACES]) {
   int i;
   // Render each Tile using the current Space
   for (i=0; i<NUM_SPACES; i++) {
-    TSpace_Render(T->spaces[i], Tc[i], S); 
+    TSpace_render(T->spaces[i], Tc[i], S); 
   }
 }
 
@@ -50,9 +50,11 @@ void TTiles_handleEvent(TTiles * T, SDL_Event * e, TCoord * Tc[NUM_SPACES]) {
     // This might just say if it was indeed clicked and change its
     // sprite. So then this function should just return if either it was
     // clicked
+    /*
     if ( TSpace_handleEvent(T->spaces[i], e, Tc[i]) ) {
       // In case it was indeed clicked, pass the space pointer (or integer id)
       // to show it's data in the details viewport
     }
+    */
   }
 }

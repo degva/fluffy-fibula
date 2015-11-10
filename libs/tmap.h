@@ -22,7 +22,7 @@ enum tilePosition {
   SOUTH,
   SOU_WEST,
   WEST
-}
+};
 
 typedef struct {
   TCoord *coords[NUMBER_OF_TILES][SPACES_X_TILE];
