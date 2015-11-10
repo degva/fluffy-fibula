@@ -5,7 +5,7 @@ void TTiles_init(TTiles * T) {
   // Give them each necesary value
 }
 
-void TTiles_Render(TTiles * T, SDL_Surface * S) {
+void TTiles_Render(TTiles * T, TCoord * Tc, SDL_Surface * S) {
   // Render each Tile using the current Space
 }
 

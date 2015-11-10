@@ -6,6 +6,7 @@
 #include <enemigos.h>
 
 #define MAXSPACES 6
+#define SPACESIZE 40
 
 enum tiposDeSpace {
     PLAIN = 2,

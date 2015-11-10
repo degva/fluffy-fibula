@@ -13,6 +13,11 @@
 #define NUM_SPACES 7
 
 typedef struct {
+  int x;
+  int y;
+} TCoord;
+
+typedef struct {
   TSpace * spaces[NUM_SPACES];
 } TTiles;
 
