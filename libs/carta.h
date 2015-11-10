@@ -1,7 +1,10 @@
-#ifndef CARTAST_H
-#define CARTAST_h
 
-struct fluFlyCart {
+#include "ttarray.h"
+
+#ifndef CARTAST_H
+#define CARTAST_H
+typedef struct _fluFlyCart fluFlyCart;
+struct _fluFlyCart {
 	const tchar *name ;
 	int points;
 	int type;
@@ -10,9 +13,11 @@ struct fluFlyCart {
 };
 
 
-fluFlyCart * fluFlyCart_new(cont tchar *name,int points,int type, const tchar *img);
+fluFlyCart * fluFlyCart_new(const tchar *name,int points,int type, const tchar *img);
 
 TArray * fluFlyCart_create_carts();
-fluFlyCart_free ( fluFlyCart * );
 
-fluFlyCart_modify_points(fluFlyCart * carta , int points);
+void fluFlyCart_modify_points (fluFlyCart * , int points);
+
+#endif	/* CARTA_H */
+

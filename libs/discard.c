@@ -1,42 +1,47 @@
 #include "discard.h"
-
+#include "tmlist.h"
 fluFlyCartDiscard * fluFlyCartDiscard_new()
 {
-	fluFlyCartDiscard * discard
+	fluFlyCartDiscard * discard;
 	discard = malloc (sizeof (fluFlyCartDiscard));
 	discard ->list = t_mlist_new();
 	//discard -> game = game ;
-	return discard
+	return discard;
 }
 
-fluflyCartDiscard * fluflyCartDiscard_add_element (fluflyCartDiscard * discard, fluflyCart * carta)
+fluFlyCartDiscard * fluFlyCartDiscard_add_element (fluFlyCartDiscard * discard, fluFlyCart * carta)
 {
-	t_mlist_prepend (T_MLIST (discard -> list), element);
+    t_mlist_prepend (T_MLIST (discard -> list), carta);
 }
 
-fluFlyCartDiscard * fluFlyCartDiscard_shuffle (fluFlyCartDiscard * discard )
-{
-	fluflyCartDiscard discard[1000];
-    TList *next = NULL; 
-    TList *start = NULL; 
-    TList *end = NULL;
-    int i = 0;
-    
-    memset(discard, 0, sizeof(discard));
-    srand ( time(NULL) );
-    start = &discard[ rand() % (1000)];           
-    end = start;
-    
-    for (i = 0; i < 999; ++i)
-    {   
-        end->next = end;
-        while ((pNext = &discard[ rand() % (1000)]) && pNext->next);
-        end->next = pNext;
-        end = pNext;
+
+TArray * fluFlyCartDiscard_to_array(fluFlyCartDiscard * discard){
+    TArray *array ;
+            array = t_array_new();
+    TList * list = discard->list->start;
+    while (list!= NULL){
+        t_array_append ( array,  list->data);
+        list=list->next;
     }
+    return (array) ;
+
+
+}
+TArray * fluFlyCartDiscard_shuffle (TArray * array, int n ){
+    //colocar la semilla en el inicio
+    //srand(time(NULL));
+    int r = rand(); 
+    int i;
     
+    for ( i = n-1 ; i >= 1; i--){
+        int pos = rand() % i;
+        tpointer *aux;
+        aux = array->vector[i];
+        array->vector[i] = array->vector[pos];
+        array->vector[pos] = aux;
+    }
+    return array;
+    /* creditos juan tomairo  */
 }
 
 
-
-}

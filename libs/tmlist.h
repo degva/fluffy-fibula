@@ -2,6 +2,7 @@
 #define __T_MLIST_H__
 
 #include "ttypes.h"
+#include "tlist.h"
 
 #define T_MLIST(x)      ((TMList *) x)
 
@@ -18,3 +19,4 @@ void t_mlist_append (TMList * list, tpointer data);
 TBoolean t_mlist_is_empty (TMList * list);
 
 #endif /* __T_MLIST_H__ */
+

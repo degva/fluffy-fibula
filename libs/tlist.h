@@ -3,6 +3,7 @@
 
 #include "ttypes.h"
 
+
 struct _TList {
   tpointer data;
   TList * next;
@@ -17,3 +18,4 @@ TBoolean t_list_is_empty (TList * list);
 #define T_LIST(x)         ((TList *) x)
 
 #endif /* __T_LIST_H__ */
+

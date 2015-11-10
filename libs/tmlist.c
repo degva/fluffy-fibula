@@ -1,4 +1,5 @@
-#include "tlib.h"
+#include "tmlist.h"
+
 
 TMList *
 t_mlist_new ()
@@ -38,6 +39,7 @@ t_mlist_is_empty (TMList * list)
 {
   return (list->start == NULL) && (list->end == NULL);
 }
+
 
 void
 t_mlist_prepend (TMList * list, tpointer data)

@@ -2,8 +2,8 @@
 #define __T_ARRAY_H__
 
 #include "ttypes.h"
-
-struct TArray
+typedef struct _TArray TArray;
+struct _TArray
 {
   tpointer *vector;
   int len;
@@ -11,4 +11,9 @@ struct TArray
 };
 
 TArray * t_array_new ();
+//+void t_array_foreach (TArray * array, TFunc func, tpointer user_data);
 void t_array_append (TArray * array, tpointer data);
+
+
+#endif	/* TTARRAY_H */
+
