@@ -89,12 +89,17 @@ void TMap_addNewTile(TMap * M, int pos) {
 void TMap_Render(TMap * M, SDL_Surface * S) {
   int i;
   // Render each surface of each tile
+  // Uses the coordinates to do this
   for (i=0; i<NUMBER_OF_TILES; i++) {
     TTiles_Render(M->tiles[i], S, M->coords[i]);
   }
-  // Uses the coordinates to do this
 }
 
 void TMap_handleEvent(TMap * M, SDL_Event * e) {
+  int i;
   // Call each the handler of each tile
+  // uses the coordinates to do this
+  for (i=0; i<NUMBER_OF_TILES; i++) {
+    TTiles_handleEvent(M->tiles[i], e, M->coords[i]);
+  }
 }

@@ -22,7 +22,7 @@ typedef struct {
 } TTiles;
 
 void TTiles_init(TTiles*);
-void TTiles_Render(TTiles *, SDL_Surface *);
-void TTiles_handleEvent(TTiles *, SDL_Event *); 
+void TTiles_Render(TTiles *, TCoord *, SDL_Surface *);
+void TTiles_handleEvent(TTiles *, SDL_Event *, TCoord *); 
 
 #endif
