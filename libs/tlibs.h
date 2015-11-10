@@ -1,6 +1,9 @@
 #ifndef _TLIBS_
 #define _TLIBS
 
+#define WIN_HEIGHT 480
+#define WIN_WIDTH 640
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>

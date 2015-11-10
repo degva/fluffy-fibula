@@ -7,14 +7,3 @@ void TSpace_init(TSpace * S) {
     S->spaces = (TSpace *) malloc(sizeof(TSpace)*6);
 }
 
-TSpace * TSpace_createSpace() {
-    TSpace * space;
-    space = (TSpace *) malloc(sizeof(TSpace));
-
-    TSpace_init(space);    
-}
-
-
-
-
-

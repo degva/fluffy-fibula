@@ -67,7 +67,7 @@ bool Game_OnInit(CApp * C) {
     "Cualquier cosa",
     SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED,
-    640, 480,
+    WIN_WIDTH, WIN_HEIGHT,
     SDL_WINDOW_SHOWN
   );
   if (C->appWindow == NULL) {
