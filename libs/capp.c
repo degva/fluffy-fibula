@@ -37,14 +37,15 @@ int Game_OnExecute(CApp * C) {
           break;
       }
     }
-    // Clear Renderer
-    SDL_SetRenderDrawColor( C->appRenderer, 0x00, 0x00, 0x00, 0x00 );
-    SDL_RenderClear( C->appRenderer );
 
     TMenu_OnRender(C->appRenderer, menu);
 
     // Render Present
     SDL_RenderPresent( C->appRenderer );
+    
+    // Clear Renderer
+    SDL_SetRenderDrawColor( C->appRenderer, 0x00, 0x00, 0x00, 0x00 );
+    SDL_RenderClear( C->appRenderer );
   }
   // Create the Map
   TMap * map;
@@ -55,15 +56,16 @@ int Game_OnExecute(CApp * C) {
     while(SDL_PollEvent(&Event)) {
       Game_OnEvent(C, &Event);
     }
-    // Clear Renderer
-    SDL_SetRenderDrawColor( C->appRenderer, 0x00, 0x00, 0x00, 0x00 );
-    SDL_RenderClear( C->appRenderer );
     
     //Game_OnLoop(C);
     Game_OnRender(C, map);
 
     // Render Present
     SDL_RenderPresent( C->appRenderer );
+
+    // Clear Renderer
+    SDL_SetRenderDrawColor( C->appRenderer, 0x00, 0x00, 0x00, 0x00 );
+    SDL_RenderClear( C->appRenderer );
   }
   return 0;
 }

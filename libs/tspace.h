@@ -15,6 +15,12 @@ enum tiposDeSpace {
     SWAMP = 5,
     UNREACHABLE = 1000
 };
+enum mousePos {
+  SPACE_TILE_OFF,
+  SPACE_TILE_HOVER,
+  SPACE_TILE_TOTAL
+};
+
 typedef struct {
   int x;
   int y;
@@ -23,10 +29,11 @@ typedef struct {
 typedef struct _TSpace {
     bool descubierto;
     int tipoDeSpace;
+    int currentSprite;
     // este es el Tipo Entidad General en enemigos.h
     // TEntGen * relleno;
     struct _TSpace * spaces[MAXSPACES];
-    SDL_Texture * texture;
+    SDL_Texture * texture[SPACE_TILE_TOTAL]; // We will use other in case of hover
 } TSpace;
 
 // Crea un space simple, de manera random
@@ -40,7 +47,7 @@ void TSpace_init(TSpace * S, SDL_Renderer * R);
 void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Renderer * R);
 
 // Llamado por TMap_handleEvent
-void TSpace_changeBackground(TSpace * Ts, SDL_Renderer * R);
+void TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord);
 
 
 #endif
