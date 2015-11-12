@@ -2,13 +2,17 @@
 #include <menu.h>
 
 /* Game related functions */
-void CApp_init(CApp * C) {
-  C->Running = true;
-  C->appWindow = NULL;
+CApp * CApp_new() {
+  CApp * app;
+  app = (CApp *) malloc(sizeof(CApp));
+  app->Running = true;
+  app->appWindow = NULL;
+  app->appRenderer = NULL;
+  return app;
 }
 
 void Game_OnRender(CApp * C, TMap * M) {
-  TMap_Render(M,C->appSurface);
+  TMap_Render(M,C->appRenderer);
 }
 
 int Game_OnExecute(CApp * C, TMap * M) {
@@ -18,7 +22,7 @@ int Game_OnExecute(CApp * C, TMap * M) {
   // Create Event and Menu
   TMenu * menu;
   menu = (TMenu *) malloc(sizeof(TMenu));
-  TMenu_init(menu);
+  TMenu_init(menu, C->font, C->appRenderer);
   SDL_Event Event;
   // Show Menu
   while(menu->Running && C->Running) {
@@ -32,37 +36,52 @@ int Game_OnExecute(CApp * C, TMap * M) {
           break;
       }
     }
-    TMenu_OnRender(C->appSurface, C->font, menu);
-    // Show new graphs
-    SDL_UpdateWindowSurface( C->appWindow );
-    // Clear the screen
-    SDL_FillRect(C->appSurface,NULL,0);
+    // Clear Renderer
+    SDL_SetRenderDrawColor( C->appRenderer, 0x00, 0x00, 0x00, 0x00 );
+    SDL_RenderClear( C->appRenderer );
+
+    TMenu_OnRender(C->appRenderer, menu);
+
+    // Render Present
+    SDL_RenderPresent( C->appRenderer );
   }
   // Show Game
   while(C->Running) {
     while(SDL_PollEvent(&Event)) {
       Game_OnEvent(C, &Event);
     }
+    // Clear Renderer
+    SDL_SetRenderDrawColor( C->appRenderer, 0x00, 0x00, 0x00, 0x00 );
+    SDL_RenderClear( C->appRenderer );
+    
     //Game_OnLoop(C);
     Game_OnRender(C, M);
-    SDL_UpdateWindowSurface( C->appWindow );
-    // Clear the screen
-    SDL_FillRect(C->appSurface,NULL,0);
+
+    // Render Present
+    SDL_RenderPresent( C->appRenderer );
   }
   return 0;
 }
 
 bool Game_OnInit(CApp * C) {
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+    printf("Could not init SDL\n");
     return false;
   }
-  
-  // Init font things
-  if (TTF_Init() < 0) {
+ 
+  if (!SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" )) {
+    printf("Linear texture could not be enabled\n");
     SDL_Quit();
     return false;
   }
 
+  // Init font things
+  if (TTF_Init() < 0) {
+    printf("Couldn't init TTF library");
+    SDL_Quit();
+    return false;
+  }
+  
   C->appWindow = SDL_CreateWindow(
     "Cualquier cosa",
     SDL_WINDOWPOS_UNDEFINED,
@@ -76,17 +95,36 @@ bool Game_OnInit(CApp * C) {
     return false;
   }
 
+  C->appRenderer = SDL_CreateRenderer( C->appWindow, -1, SDL_RENDERER_ACCELERATED );
+  if (C->appRenderer == NULL) {
+    printf("Could not create Renderer");
+    SDL_Quit();
+    TTF_Quit();
+    return false;
+  }
+
+  /* Deprecated
   C->appSurface = SDL_GetWindowSurface(C->appWindow);
   if (C->appSurface == NULL) {
     SDL_Quit();
     TTF_Quit();
     return false;
   }
+  */
 
   // load Hack font
   C->font = TTF_OpenFont("fonts/Hack.ttf", 16);
   if (C->font == NULL) {
     printf("Couldn't load Hack font, %s\n", TTF_GetError());
+    SDL_Quit();
+    TTF_Quit();
+    return false;
+  }
+
+  SDL_SetRenderDrawColor( C->appRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+  // Start IMG things!
+  if ( !( IMG_Init(IMG_INIT_PNG) ) ) {
+    printf("Could not start PNG libs!");
     SDL_Quit();
     TTF_Quit();
     return false;

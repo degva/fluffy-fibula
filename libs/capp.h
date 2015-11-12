@@ -6,11 +6,12 @@
 typedef struct {
   bool Running;
   SDL_Window* appWindow;
-  SDL_Surface* appSurface;
+  SDL_Renderer* appRenderer;
+  // SDL_Surface* appSurface; Deprecated
   TTF_Font * font;
 } CApp;
 
-void CApp_init(CApp * C);
+CApp * CApp_new();
 
 // Game Related functions
 

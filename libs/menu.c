@@ -3,20 +3,33 @@
 /* Button functions */
 
 /* Inits a function */
-void TButton_init(TButton * B, char * text) {
+void TButton_init(TButton * B, TTF_Font * F, char * text, SDL_Renderer * R) {
   B->text = text;
   B->pos_x = 0;
   B->pos_y = 0;
   B->currentSprite = BUTTON_SPRITE_MOUSE_OUT;
-  B->buttonText = NULL;
-}
 
-/*
-void TButton_loadText(TButton * B, char * text) {
-  // Save text into the Button
-  B->text = text;
+  // Some Colors...
+  SDL_Color color0 = {255,255,255};
+  SDL_Color color1 = {0,255,0};
+  SDL_Color color2 = {255,0,0};
+  /*
+   * NOte: it's possible to get the text dimensions with:
+   * textSurface->w
+   * textSurface->h
+   */
+
+  SDL_Surface * textSurface;
+  textSurface = TTF_RenderText_Solid(F, B->text, color0);
+  B->buttonText[BUTTON_SPRITE_MOUSE_OUT] = SDL_CreateTextureFromSurface(R, textSurface);
+
+  textSurface = TTF_RenderText_Solid(F, B->text, color1);
+  B->buttonText[BUTTON_SPRITE_MOUSE_OVER_MOTION] = SDL_CreateTextureFromSurface(R, textSurface);
+
+  textSurface = TTF_RenderText_Solid(F, B->text, color2);
+  B->buttonText[BUTTON_SPRITE_MOUSE_DOWN] = SDL_CreateTextureFromSurface(R, textSurface);
+  SDL_FreeSurface(textSurface);
 }
-*/
 
 void TButton_setPosition(TButton * B, int x, int y) {
   B->pos_x = x;
@@ -27,7 +40,6 @@ void TButton_handleEvent(TButton * B, SDL_Event * e) {
   if (
     e->type == SDL_MOUSEMOTION
     || e->type == SDL_MOUSEBUTTONDOWN
-    || e->type == SDL_MOUSEBUTTONUP
   ) {
     // Get mouse position
     int x, y;
@@ -60,49 +72,24 @@ void TButton_handleEvent(TButton * B, SDL_Event * e) {
         case SDL_MOUSEBUTTONDOWN:
           B->currentSprite = BUTTON_SPRITE_MOUSE_DOWN;
           break;
-        case SDL_MOUSEBUTTONUP:
-          B->currentSprite = BUTTON_SPRITE_MOUSE_UP;
-          break;
       }
     }
   }
 }
 
-void TButton_render(TButton * B, TTF_Font * F, SDL_Surface * S) {
-  // Color if OUT
-  SDL_Color color0 = {255,255,255};
-  SDL_Color color1 = {0,255,0};
-  SDL_Color color2 = {255,0,0};
-  SDL_Color color3 = {0,0,255};
-  switch (B->currentSprite) {
-    case BUTTON_SPRITE_MOUSE_OUT:
-      B->buttonText = TTF_RenderText_Solid(F, B->text, color0);
-      break;
-    case BUTTON_SPRITE_MOUSE_OVER_MOTION:
-      B->buttonText = TTF_RenderText_Solid(F, B->text, color1);
-      break;
-    case BUTTON_SPRITE_MOUSE_DOWN:
-      B->buttonText = TTF_RenderText_Solid(F, B->text, color2);
-      break;
-    case BUTTON_SPRITE_MOUSE_UP:
-      B->buttonText = TTF_RenderText_Solid(F, B->text, color3);
-      break;
-  }
-  // Create text surface
-  //B->buttonText = TTF_RenderText_Solid(F, B->text, color);
+void TButton_render(TButton * B, SDL_Renderer * R) {
   // Put it into the screen
-  SDL_Rect * destRect;
-  destRect->x = B->pos_x;
-  destRect->y = B->pos_y;
-  destRect->w = BUTTON_WIDTH;
-  destRect->h = BUTTON_HEIGHT;
-  SDL_BlitSurface(B->buttonText, NULL, S, destRect);
-  // Free Button Surface
-  SDL_FreeSurface(B->buttonText);
+  SDL_Rect destRect;
+  destRect.x = B->pos_x;
+  destRect.y = B->pos_y;
+  destRect.w = BUTTON_WIDTH;
+  destRect.h = BUTTON_HEIGHT;
+  SDL_RenderCopy(R, B->buttonText[B->currentSprite], NULL, &destRect);
+  // Free Texture!!
 }
 
 // Menu Functions
-void TMenu_init(TMenu * M) {
+void TMenu_init(TMenu * M, TTF_Font * F, SDL_Renderer * R) {
   // Iniciamos 3 botons primarios del menu
   // Init 3 primary buttons of the menu
   M->Running = true;
@@ -112,26 +99,22 @@ void TMenu_init(TMenu * M) {
   TButton * bContinuar = malloc(sizeof(TButton));
   TButton * bSalir = malloc(sizeof(TButton));
 
-  TButton_init(bIniciar, "Iniciar");
+  TButton_init(bIniciar, F, "Iniciar", R);
   *(M->buttons) = bIniciar;
-  TButton_init(bContinuar, "Continuar");
+  TButton_init(bContinuar, F, "Continuar", R);
   *(M->buttons+1) = bContinuar;
-  TButton_init(bSalir, "Salir");
+  TButton_init(bSalir, F ,"Salir", R);
   *(M->buttons+2) = bSalir;
 
   TButton_setPosition(*(M->buttons), 480/2, 100);
   TButton_setPosition(*(M->buttons+1), 480/2, 150);
   TButton_setPosition(*(M->buttons+2), 480/2, 200);
 
-  /*
-  TButton_loadText(*(M->buttons), "Iniciar");
-  TButton_loadText(*(M->buttons+1), "Continuar");
-  TButton_loadText(*(M->buttons+2), "Salir");
-  */
-
   // Init background images of the menu
+  /* TODO load png backgrounds and such...
   M->background = SDL_LoadBMP( "img/background.bmp" );
   M->logo = SDL_LoadBMP( "img/logo.bmp" );
+  */
 
   // TODO handle errors in case the images doesn't load correctly
 }
@@ -159,15 +142,15 @@ int TMenu_OnEvent(SDL_Event * e, TMenu * M) {
   return response;
 }
 
-void TMenu_OnRender(SDL_Surface * S, TTF_Font * F, TMenu * M) {
+void TMenu_OnRender(SDL_Renderer * R, TMenu * M) {
   int i;
   // Print the background:
-  SDL_BlitSurface( M->background, NULL, S, NULL);
+  //SDL_RenderCopy( M->background, R, NULL, NULL);
   // Show the logo
-  SDL_BlitSurface( M->logo, NULL, S, NULL);
+  //SDL_RenderCopy( M->logo, R, NULL, NULL);
 
   // Show the texts
   for (i=0; i<MENU_TOTAL_BUTTONS; i++) {
-    TButton_render( *(M->buttons+i), F, S);
+    TButton_render( *(M->buttons+i), R);
   }
 }

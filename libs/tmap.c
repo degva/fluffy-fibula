@@ -1,19 +1,19 @@
 #include <tmap.h>
 
-void TMap_init(TMap * M) {
+void TMap_init(TMap * M, SDL_Renderer * R) {
   // Set current Tile
   M->currentTile = 0;
   // Attach it to the Map with the coordinates of the middle of the screen
-  TMap_putNewTileCoords(M, WIN_WIDTH/2, WIN_HEIGHT/2);
+  TMap_putNewTileCoords(M, WIN_WIDTH/2, WIN_HEIGHT/2, R);
 }
 
-void TMap_putNewTileCoords(TMap * M, int posx, int posy) {
+void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R) {
   int curTile = M->currentTile;
   
   // Create tile
   TTiles * tile;
   tile = malloc(sizeof(TTiles));
-  TTiles_init(tile);
+  TTiles_init(tile, R);
   
   // this is the first tile ( the one in the center )
   M->tiles[curTile] = tile;
@@ -60,33 +60,41 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy) {
   M->currentTile += 1;
 }
 
-void TMap_addNewTile(TMap * M, int pos) {
+void TMap_addNewTile(TMap * M, int pos, SDL_Renderer * R) {
   int posx = ((TCoord *) M->tiles[M->currentTile])->x;
   int posy = ((TCoord *) M->tiles[M->currentTile])->y;
   int des = 1.2438;
+  int new_posx, new_posy;
   switch (pos) {
     case NOR_EAST:
-      TMap_putNewTileCoords(M, posx + 2*SPACESIZE, posy + 2*des*SPACESIZE);
+      new_posx = posx + 2*SPACESIZE;
+      new_posy = posy + 2*des*SPACESIZE;
       break;
     case EAST:
-      TMap_putNewTileCoords(M, posx + 2*SPACESIZE, posy - 2*des*SPACESIZE);
+      new_posx = posx + 2*SPACESIZE;
+      new_posy = posy - 2*des*SPACESIZE;
       break;
     case SOUTH:
-      TMap_putNewTileCoords(M, posx + SPACESIZE/2, posy - 3*des*SPACESIZE);
+      new_posx = posx + SPACESIZE/2;
+      new_posy = posy - 3*des*SPACESIZE;
       break;
     case SOU_WEST:
-      TMap_putNewTileCoords(M, posx - 2*SPACESIZE, posy - 2*des*SPACESIZE);
+      new_posx = posx - 2*SPACESIZE;
+      new_posy = posy - 2*des*SPACESIZE;
       break;
     case WEST:
-      TMap_putNewTileCoords(M, posx - 2*SPACESIZE, posy + 2*des*SPACESIZE);
+      new_posx = posx - 2*SPACESIZE;
+      new_posy = posy + 2*des*SPACESIZE;
       break;
     case NORTH:
-      TMap_putNewTileCoords(M, posx - SPACESIZE/2, posy + 3*des*SPACESIZE);
+      new_posx = posx - SPACESIZE/2;
+      new_posy = posy + 3*des*SPACESIZE;
       break;
   }
+  TMap_putNewTileCoords(M, new_posx, new_posy, R);
 }
 
-void TMap_Render(TMap * M, SDL_Surface * S) {
+void TMap_Render(TMap * M, SDL_Renderer * R) {
   int i;
   // Render each surface of each tile
   // Uses the coordinates to do this
@@ -94,7 +102,7 @@ void TMap_Render(TMap * M, SDL_Surface * S) {
     if (M->tiles[i] == NULL) {
       break;
     }
-    TTiles_Render(M->tiles[i], S, M->coords[i]);
+    TTiles_Render(M->tiles[i], R, M->coords[i]);
   }
 }
 

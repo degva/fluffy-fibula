@@ -31,13 +31,13 @@ typedef struct {
 } TMap;
 
 // Initialize a Map
-void TMap_init(TMap * M);
+void TMap_init(TMap * M, SDL_Renderer * R);
 // put a new Tile in the coords and tiles
-void TMap_putNewTileCoords(TMap * M, int posx, int posy);
+void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R);
 // add a new Tile
-void TMap_addNewTile(TMap * M, int pos);
+void TMap_addNewTile(TMap * M, int pos, SDL_Renderer * R);
 // Renders a Map
-void TMap_Render(TMap * M, SDL_Surface * S);
+void TMap_Render(TMap * M, SDL_Renderer * R);
 // Handles the Map
 void TMap_handleEvent(TMap * M, SDL_Event * e);
 

@@ -1,6 +1,6 @@
 #include <ttiles.h>
 
-void TTiles_init(TTiles * T) {
+void TTiles_init(TTiles * T, SDL_Renderer * R) {
   int i;
   // Create a new Tile with a bunch of new spaces
   // Give them each necesary value
@@ -8,13 +8,13 @@ void TTiles_init(TTiles * T) {
   // NOTE: when i=0 we know it's about the center space of the tile
   TSpace * temp;
   TSpace * central = malloc(sizeof(TSpace));
-  TSpace_init(central);
+  TSpace_init(central, R);
   T->spaces[0] = central;
 
   for (i=1; i<NUM_SPACES; i++) {
     TSpace * newSpace;
     newSpace = malloc(sizeof(TSpace));
-    TSpace_init(newSpace);
+    TSpace_init(newSpace, R);
     // put the new space in the tile
     T->spaces[i] = newSpace;
     // Now interconect between the new and the cnetral
@@ -35,7 +35,7 @@ void TTiles_init(TTiles * T) {
   }
 }
 
-void TTiles_Render(TTiles * T, SDL_Surface * S, TCoord * Tc[NUM_SPACES]) {
+void TTiles_Render(TTiles * T, SDL_Renderer * S, TCoord * Tc[NUM_SPACES]) {
   int i;
   // Render each Tile using the current Space
   for (i=0; i<NUM_SPACES; i++) {

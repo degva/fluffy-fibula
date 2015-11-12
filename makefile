@@ -1,7 +1,7 @@
 GCC=gcc
 #CFLAGS=-g -Wall -Wextra
 CFLAGS=-g
-LINKER_FLAGS=-lSDL2 -lSDL2_ttf
+LINKER_FLAGS=-lSDL2 -lSDL2_ttf -lSDL2_image
 
 LDIR=libs
 ODIR=objs
@@ -14,7 +14,9 @@ OBJS=$(patsubst %,$(ODIR)/%,$(_OBJS))
 
 all: app
 
+# Baraja...
 
+# TMap things...
 $(ODIR)/tspace.o: $(LDIR)/tspace.c $(LDIR)/tspace.h
 	$(GCC) -c -o $@ $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
 $(ODIR)/ttile.o: $(LDIR)/ttiles.c $(LDIR)/ttiles.h $(ODIR)/tspace.o

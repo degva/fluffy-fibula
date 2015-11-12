@@ -6,7 +6,7 @@
 #include <enemigos.h>
 
 #define MAXSPACES 6
-#define SPACESIZE 40
+#define SPACESIZE 50
 
 enum tiposDeSpace {
     PLAIN = 2,
@@ -26,21 +26,21 @@ typedef struct _TSpace {
     // este es el Tipo Entidad General en enemigos.h
     // TEntGen * relleno;
     struct _TSpace * spaces[MAXSPACES];
-    SDL_Surface * surface;
+    SDL_Texture * texture;
 } TSpace;
 
 // Crea un space simple, de manera random
 // Mira este link: http://stackoverflow.com/questions/822323/how-to-generate-a-random-number-in-c
 // Debe usar el enum tiposDeSpace para create el space
 // Nota: debe poner spaces en espacios en blanco
-void TSpace_init(TSpace * S);
+void TSpace_init(TSpace * S, SDL_Renderer * R);
 
 // hace un render en el Surface S
 // ver tmenu.c funcion TMenu_onRender() para ver funcionalidad
-void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Surface * S);
+void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Renderer * R);
 
 // Llamado por TMap_handleEvent
-void TSpace_changeBackground(TSpace * Ts, SDL_Surface * S);
+void TSpace_changeBackground(TSpace * Ts, SDL_Renderer * R);
 
 
 #endif
