@@ -7,6 +7,10 @@ void TSpace_init(TSpace * S, SDL_Renderer * R) {
     // Load tile surface
     SDL_Surface * surf;
     surf = IMG_Load( "img/tile.png" );
+    if (surf == NULL) {
+      printf("Tile were not loaded!!");
+    }
+    //print ((TSpace *) M->tiles[i]->spaces[1])->texture
     S->texture = SDL_CreateTextureFromSurface( R, surf );
     SDL_FreeSurface(surf);
     // S->spaces = (TSpace *) malloc(sizeof(TSpace)*6);

@@ -15,10 +15,11 @@ void Game_OnRender(CApp * C, TMap * M) {
   TMap_Render(M,C->appRenderer);
 }
 
-int Game_OnExecute(CApp * C, TMap * M) {
+int Game_OnExecute(CApp * C) {
   if (!Game_OnInit(C)) {
     return -1;
   }
+
   // Create Event and Menu
   TMenu * menu;
   menu = (TMenu *) malloc(sizeof(TMenu));
@@ -45,6 +46,10 @@ int Game_OnExecute(CApp * C, TMap * M) {
     // Render Present
     SDL_RenderPresent( C->appRenderer );
   }
+  // Create the Map
+  TMap * map;
+  map = (TMap *) malloc(sizeof(TMap));
+  TMap_init(map, C->appRenderer);
   // Show Game
   while(C->Running) {
     while(SDL_PollEvent(&Event)) {
@@ -55,7 +60,7 @@ int Game_OnExecute(CApp * C, TMap * M) {
     SDL_RenderClear( C->appRenderer );
     
     //Game_OnLoop(C);
-    Game_OnRender(C, M);
+    Game_OnRender(C, map);
 
     // Render Present
     SDL_RenderPresent( C->appRenderer );

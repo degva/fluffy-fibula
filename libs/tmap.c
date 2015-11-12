@@ -9,7 +9,7 @@ void TMap_init(TMap * M, SDL_Renderer * R) {
 
 void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R) {
   int curTile = M->currentTile;
-  
+  float goldNum = 0.76;  
   // Create tile
   TTiles * tile;
   tile = malloc(sizeof(TTiles));
@@ -25,7 +25,7 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R) {
   // SPACE 1
   TCoord * coorT1 = malloc(sizeof(TCoord));
   coorT1->x = posx + SPACESIZE/2;
-  coorT1->y = posy + 0.8*SPACESIZE;
+  coorT1->y = posy + goldNum*SPACESIZE;
   // SPACE 2
   TCoord * coorT2 = malloc(sizeof(TCoord));
   coorT2->x = posx + SPACESIZE;
@@ -33,11 +33,11 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R) {
   // SPACE 3
   TCoord * coorT3 = malloc(sizeof(TCoord));
   coorT3->x = posx + SPACESIZE/2;
-  coorT3->y = posy - 0.8*SPACESIZE;
+  coorT3->y = posy - goldNum*SPACESIZE;
   // SPACE 4
   TCoord * coorT4 = malloc(sizeof(TCoord));
   coorT4->x = posx - SPACESIZE/2;
-  coorT4->y = posy - 0.8*SPACESIZE;
+  coorT4->y = posy - goldNum*SPACESIZE;
   // SPACE 5
   TCoord * coorT5 = malloc(sizeof(TCoord));
   coorT5->x = posx - SPACESIZE;
@@ -45,7 +45,7 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R) {
   // SPACE 6
   TCoord * coorT6 = malloc(sizeof(TCoord));
   coorT6->x = posx - SPACESIZE/2;
-  coorT6->y = posy + 0.8*SPACESIZE;
+  coorT6->y = posy + goldNum*SPACESIZE;
 
   // put Coordinates on the tiles
   M->coords[curTile][0] = coorT0;
