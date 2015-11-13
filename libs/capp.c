@@ -54,7 +54,7 @@ int Game_OnExecute(CApp * C) {
   // Show Game
   while(C->Running) {
     while(SDL_PollEvent(&Event)) {
-      Game_OnEvent(C, &Event);
+      Game_OnEvent(C, map, &Event);
     }
     
     //Game_OnLoop(C);
@@ -143,7 +143,8 @@ void Game_OnCleanup() {
   SDL_Quit();
 }
 
-void Game_OnEvent(CApp * C, SDL_Event * Event) {
+void Game_OnEvent(CApp * C, TMap * M, SDL_Event * Event) {
+  TMap_handleEvent(M, Event);
   if (Event->type == SDL_QUIT) {
     C->Running = false;
   }

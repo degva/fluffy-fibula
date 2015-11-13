@@ -40,5 +40,44 @@ void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Renderer * R) {
 }
 
 void TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord) {
-  
+  if (
+    e->type == SDL_MOUSEMOTION
+    //|| e->type == SDL_MOUSEBUTTONDOWN
+  ) {
+    // Get mouse position
+    int ex, ey;
+    SDL_GetMouseState( &ex, &ey );
+    // Check if mouse is in button
+    bool inside = false;
+
+    if (
+        ex > coord->x &&
+        ex < coord->x + SPACESIZE &&
+        ey > 0.5012*(-ex + coord->x) + coord->y + 0.2506*SPACESIZE &&
+        ey < 0.5012*(ex - coord->x) + coord->y + 0.7494*SPACESIZE &&
+        ey > 0.5012*(ex - coord->x) + coord->y - 0.2506*SPACESIZE &&
+        ey < 0.5012*(-ex + coord->x + SPACESIZE) + coord->y + 0.7494*SPACESIZE
+        )
+    {
+      inside = true;
+    }
+
+    // Mouse is outside button
+    if (!inside) {
+      Ts->currentSprite = SPACE_TILE_OFF;
+    }
+    // Mouse is inside button
+    else {
+      switch (e->type) {
+        case SDL_MOUSEMOTION:
+          Ts->currentSprite = SPACE_TILE_HOVER;
+          break;
+        /*
+        case SDL_MOUSEBUTTONDOWN:
+          B->currentSprite = BUTTON_SPRITE_MOUSE_DOWN;
+          break;
+        */
+      }
+    }
+  }
 }

@@ -1,6 +1,9 @@
 #include <tmap.h>
 
 void TMap_init(TMap * M, SDL_Renderer * R) {
+  int i;
+  for (i=0; i<7; i++)
+    M->tiles[i] == NULL;
   // Set current Tile
   M->currentTile = 0;
   // Attach it to the Map with the coordinates of the middle of the screen
@@ -111,6 +114,9 @@ void TMap_handleEvent(TMap * M, SDL_Event * e) {
   // Call each the handler of each tile
   // uses the coordinates to do this
   for (i=0; i<NUMBER_OF_TILES; i++) {
+    if (M->tiles[i] == NULL) {
+      break;
+    }
     TTiles_handleEvent(M->tiles[i], e, M->coords[i]);
   }
 }
