@@ -2,8 +2,10 @@
 #define _TMENU_
 
 #include <tlibs.h>
+/*
 #define BUTTON_WIDTH 100
 #define BUTTON_HEIGHT 20
+*/
 #define MENU_TOTAL_BUTTONS 3
 
 enum LButtonSprite {
@@ -23,6 +25,8 @@ enum MenuItems {
 typedef struct {
   int pos_x;
   int pos_y;
+  int width;
+  int height;
   int currentSprite;
   char * text;
   SDL_Texture *buttonText[BUTTON_SPRITE_TOTAL];

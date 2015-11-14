@@ -28,6 +28,9 @@ void TButton_init(TButton * B, TTF_Font * F, char * text, SDL_Renderer * R) {
 
   textSurface = TTF_RenderText_Solid(F, B->text, color2);
   B->buttonText[BUTTON_SPRITE_MOUSE_DOWN] = SDL_CreateTextureFromSurface(R, textSurface);
+
+  B->width = textSurface->w;
+  B->height = textSurface->h;
   SDL_FreeSurface(textSurface);
 }
 
@@ -50,12 +53,12 @@ void TButton_handleEvent(TButton * B, SDL_Event * e) {
     if (x < B->pos_x) {
       inside = false;
     // mose is right of the button
-    } else if (x > B->pos_x + BUTTON_WIDTH) {
+    } else if (x > B->pos_x + B->width) {
       inside = false;
     // mouse is above the button
     } else if (y < B->pos_y) {
       inside = false;
-    } else if (y > B->pos_y + BUTTON_HEIGHT) {
+    } else if (y > B->pos_y + B->height) {
       inside = false;
     }
 
@@ -82,8 +85,8 @@ void TButton_render(TButton * B, SDL_Renderer * R) {
   SDL_Rect destRect;
   destRect.x = B->pos_x;
   destRect.y = B->pos_y;
-  destRect.w = BUTTON_WIDTH;
-  destRect.h = BUTTON_HEIGHT;
+  destRect.w = B->width;;
+  destRect.h = B->height;
   SDL_RenderCopy(R, B->buttonText[B->currentSprite], NULL, &destRect);
   // Free Texture!!
 }
@@ -106,9 +109,9 @@ void TMenu_init(TMenu * M, TTF_Font * F, SDL_Renderer * R) {
   TButton_init(bSalir, F ,"Salir", R);
   *(M->buttons+2) = bSalir;
 
-  TButton_setPosition(*(M->buttons), 480/2, 100);
-  TButton_setPosition(*(M->buttons+1), 480/2, 150);
-  TButton_setPosition(*(M->buttons+2), 480/2, 200);
+  TButton_setPosition(*(M->buttons), VP1_W/2, 100);
+  TButton_setPosition(*(M->buttons+1), VP1_W/2, 150);
+  TButton_setPosition(*(M->buttons+2), VP1_W/2, 200);
 
   // Init background images of the menu
   /* TODO load png backgrounds and such...

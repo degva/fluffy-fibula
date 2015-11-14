@@ -7,7 +7,7 @@ void TMap_init(TMap * M, SDL_Renderer * R) {
   // Set current Tile
   M->currentTile = 0;
   // Attach it to the Map with the coordinates of the middle of the screen
-  TMap_putNewTileCoords(M, WIN_WIDTH/2, WIN_HEIGHT/2, R);
+  TMap_putNewTileCoords(M, VP1_W/2, VP1_H/2, R);
 }
 
 void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R) {

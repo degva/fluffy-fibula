@@ -12,7 +12,25 @@ CApp * CApp_new() {
 }
 
 void Game_OnRender(CApp * C, TMap * M) {
+  // Render the map
+  SDL_Rect viewPort1;
+  viewPort1.x = VP1_X;
+  viewPort1.y = VP1_Y;
+  viewPort1.w = VP1_W;
+  viewPort1.h = VP1_H;
+  SDL_RenderSetViewport(C->appRenderer, &viewPort1);
   TMap_Render(M,C->appRenderer);
+
+  // Render the side Menu
+  /*
+  SDL_Rect viewPort2;
+  viewPort2.x = VP2_X
+  viewPort2.y = VP2_Y
+  viewPort2.w = VP2_W
+  viewPort2.h = VP2_H
+  SDL_RenderSetViewport(C->appRenderer, &viewPort2);
+  TSideMenu_Render(M,C->appRenderer);
+  */
 }
 
 int Game_OnExecute(CApp * C) {
