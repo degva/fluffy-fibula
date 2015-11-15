@@ -4,8 +4,8 @@ void TSpace_init(TSpace * S, SDL_Renderer * R) {
     S->descubierto = false;
     S->tipoDeSpace = 0;
     S->currentSprite = SPACE_TILE_OFF;
-    //S->relleno = NULL;
 
+    S->enemy = TEnemy_new(R);
 
     // Load tile surface for normal
     SDL_Surface * surf;
@@ -37,6 +37,8 @@ void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Renderer * R) {
   if (Ts->texture[Ts->currentSprite] == NULL) {
     printf("\t- ERROR");
   }
+
+  TEnemy_render(Ts->enemy, Tc, R);
 }
 
 void TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord) {

@@ -4,9 +4,6 @@
 #include <tlibs.h>
 #include <tentstr.h>
 
-#define MAXSPACES 6
-#define SPACESIZE 50
-
 enum tiposDeSpace {
     PLAIN = 2,
     FOREST = 3,
@@ -14,23 +11,21 @@ enum tiposDeSpace {
     SWAMP = 5,
     UNREACHABLE = 1000
 };
+
 enum mousePos {
   SPACE_TILE_OFF,
   SPACE_TILE_HOVER,
   SPACE_TILE_TOTAL
 };
 
-typedef struct {
-  int x;
-  int y;
-} TCoord;
-
 typedef struct _TSpace {
     bool descubierto;
     int tipoDeSpace;
     int currentSprite;
-    // este es el Tipo Entidad General en enemigos.h
-    // TEntGen * relleno;
+    // TEnemy y TFriendStruc no pueden estar llenos a la vez
+    // uno debe estar en null
+    TEnemy * enemy;
+    // TFriendStruc * friend;
     struct _TSpace * spaces[MAXSPACES];
     SDL_Texture * texture[SPACE_TILE_TOTAL]; // We will use other in case of hover
 } TSpace;

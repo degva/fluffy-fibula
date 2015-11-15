@@ -1,5 +1,5 @@
 #ifndef _TLIBS_
-#define _TLIBS
+#define _TLIBS_
 
 // For regular things
 #define WIN_HEIGHT 600
@@ -23,5 +23,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+#define MAXSPACES 6
+#define SPACESIZE 64
+
+typedef struct {
+  int x;
+  int y;
+} TCoord;
 
 #endif

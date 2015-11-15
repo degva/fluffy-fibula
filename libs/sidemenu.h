@@ -14,7 +14,6 @@ typedef struct {
   SDL_Texture * background;
   TMap * mapa;      // pointer to the map
   // THand * cartas;   // pointer to the hands
-  // TEnemy * enemies; // pointer to the enemies
   // THero * hero; // pointer to the hero
 } TSideMenu;
 
