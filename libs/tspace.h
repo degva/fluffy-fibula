@@ -2,8 +2,7 @@
 #define _TSPACE_H_
 
 #include <tlibs.h>
-// FIXME ver de usar tlibs.h y ademas de otro nombre para enemigos.h
-#include <enemigos.h>
+#include <tentstr.h>
 
 #define MAXSPACES 6
 #define SPACESIZE 50
