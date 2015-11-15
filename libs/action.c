@@ -24,9 +24,12 @@ fluFlyCartAction * fluFlyCartarray_to_action(TArray * array,int n){
     int i = 0;
     tpointer * array_n=array->vector[i];
     while (n!=0){
-        t_list_prepend ( inicio, array_n);
+        inicio=t_list_prepend ( inicio, array_n);
+        i++;
+        array_n= array->vector[i];
         n--;
     }
+    action->list->start= inicio;
     return (action) ;
 
 
