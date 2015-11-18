@@ -7,6 +7,8 @@ CApp * CApp_new() {
   app->Running = true;
   app->appWindow = NULL;
   app->appRenderer = NULL;
+  app->menu = NULL;
+  app->map = NULL;
   return app;
 }
 
@@ -38,16 +40,14 @@ int Game_OnExecute(CApp * C) {
   }
 
   // Create Event and Menu
-  TMenu * menu;
-  menu = (TMenu *) malloc(sizeof(TMenu));
-  TMenu_init(menu, C->font, C->appRenderer);
+  C->menu = TMenu_new(C->font, C->appRenderer);
   SDL_Event Event;
   // Show Menu
-  while(menu->Running && C->Running) {
+  while(C->menu->Running && C->Running) {
     while(SDL_PollEvent(&Event)) {
-      switch (TMenu_OnEvent(&Event, menu)) {
+      switch (TMenu_OnEvent(&Event, C->menu)) {
         case START:
-          menu->Running = false;
+          C->menu->Running = false;
           break;
         case QUIT:
           C->Running = false;
@@ -55,7 +55,7 @@ int Game_OnExecute(CApp * C) {
       }
     }
 
-    TMenu_OnRender(C->appRenderer, menu);
+    TMenu_OnRender(C->appRenderer, C->menu);
 
     // Render Present
     SDL_RenderPresent( C->appRenderer );
@@ -64,18 +64,17 @@ int Game_OnExecute(CApp * C) {
     SDL_SetRenderDrawColor( C->appRenderer, 0x00, 0x00, 0x00, 0x00 );
     SDL_RenderClear( C->appRenderer );
   }
+
   // Create the Map
-  TMap * map;
-  map = (TMap *) malloc(sizeof(TMap));
-  TMap_init(map, C->appRenderer);
+  C->map = TMap_new(C->appRenderer);
   // Show Game
   while(C->Running) {
     while(SDL_PollEvent(&Event)) {
-      Game_OnEvent(C, map, &Event);
+      Game_OnEvent(C, &Event);
     }
     
     //Game_OnLoop(C);
-    Game_OnRender(C, map);
+    Game_OnRender(C);
 
     // Render Present
     SDL_RenderPresent( C->appRenderer );
@@ -126,15 +125,6 @@ bool Game_OnInit(CApp * C) {
     TTF_Quit();
     return false;
   }
-
-  /* Deprecated
-  C->appSurface = SDL_GetWindowSurface(C->appWindow);
-  if (C->appSurface == NULL) {
-    SDL_Quit();
-    TTF_Quit();
-    return false;
-  }
-  */
 
   // load Hack font
   C->font = TTF_OpenFont("fonts/Hack.ttf", 16);

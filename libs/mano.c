@@ -4,14 +4,16 @@
 TCartMano * TCartMano_new()
 {
 	TCartMano * mano;
-	mano = malloc (sizeof (TCartMano));
-	mano ->list = t_mlist_new();
-	//mano -> game = game ;
+	mano = malloc(sizeof(TCartMano));
+	mano->list = t_mlist_new();
 	return mano;
 }
 
-TCartMano * TCartMano_add_element (TCartMano * mano, TCart * carta)
+void TCartMano_addElement (TCartMano * mano, TCart * carta)
 {
     t_mlist_prepend (T_MLIST (mano -> list), carta);
 }
 
+void TCardMano_selectCard(TCardMano *, int i) {
+
+}

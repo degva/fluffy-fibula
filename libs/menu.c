@@ -2,7 +2,9 @@
 
 
 // Menu Functions
-void TMenu_init(TMenu * M, TTF_Font * F, SDL_Renderer * R) {
+TMenu * TMenu_new(TTF_Font * F, SDL_Renderer * R) {
+  TMenu * M;
+  M = (TMenu *) malloc(sizeof(TMenu));
   // Iniciamos 3 botons primarios del menu
   // Init 3 primary buttons of the menu
   M->Running = true;
@@ -30,6 +32,7 @@ void TMenu_init(TMenu * M, TTF_Font * F, SDL_Renderer * R) {
   */
 
   // TODO handle errors in case the images doesn't load correctly
+  return M;
 }
 
 int TMenu_OnEvent(SDL_Event * e, TMenu * M) {

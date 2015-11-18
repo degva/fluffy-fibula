@@ -3,6 +3,9 @@
 
 #include <tmap.h>
 #include <menu.h>
+// #include <sidemenu.h>
+// #include <mano.h>
+// #include <tentstr.h>
 
 typedef struct {
   bool Running;
@@ -12,10 +15,10 @@ typedef struct {
 
   // Game variables
   TMenu * menu;
-  TSideMenu * sidemenu;
   TMap * map;
-  TCartMano * mano;
-  TEntities * entities;
+  //TSideMenu * sidemenu;
+  //TCartMano * mano;
+  //TEntities * entities;
   
 } CApp;
 

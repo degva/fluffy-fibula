@@ -9,12 +9,12 @@
 #define	MANO_H
 typedef struct _TCartMano TCartMano;
 struct _TCartMano{
-	//TGame *game;
 	TMList *list;
-
 };
+
 TCartMano * TCartMano_new();
-TCartMano * fluflyCartMano_add_element(TCartMano *discard , TCart * carta);
+void TCardMano_addElement(TCartMano *, TCart *);
+void TCardMano_selectCard(TCardMano *, int i);
 
 
 

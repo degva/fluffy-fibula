@@ -9,7 +9,6 @@
 // #include <tmano.h>
 
 typedef struct {
-  int currentCard;
   TButton * pay;
   SDL_Texture * background;
   TMap * mapa;      // pointer to the map

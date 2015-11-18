@@ -1,6 +1,8 @@
 #include <tmap.h>
 
-void TMap_init(TMap * M, SDL_Renderer * R) {
+TMap * TMap_new(SDL_Renderer * R) {
+  TMap * M;
+  M = (TMap *) malloc(sizeof(TMap));
   int i;
   for (i=0; i<7; i++)
     M->tiles[i] == NULL;
@@ -8,6 +10,7 @@ void TMap_init(TMap * M, SDL_Renderer * R) {
   M->currentTile = 0;
   // Attach it to the Map with the coordinates of the middle of the screen
   TMap_putNewTileCoords(M, VP1_W/2, VP1_H/2, R);
+  return M;
 }
 
 void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R) {

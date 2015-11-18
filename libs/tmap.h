@@ -31,7 +31,7 @@ typedef struct {
 } TMap;
 
 // Initialize a Map
-void TMap_init(TMap * M, SDL_Renderer * R);
+TMap * TMap_new(SDL_Renderer * R);
 // put a new Tile in the coords and tiles
 void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R);
 // add a new Tile

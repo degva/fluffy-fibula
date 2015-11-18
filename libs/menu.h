@@ -33,7 +33,7 @@ typedef struct {
 } TMenu;
 
 // Menu Functions
-void TMenu_init(TMenu *, TTF_Font * , SDL_Renderer *);
+TMenu * TMenu_new(TTF_Font * , SDL_Renderer *);
 int TMenu_OnEvent(SDL_Event *, TMenu *);
 void TMenu_OnRender(SDL_Renderer *, TMenu *);
 
