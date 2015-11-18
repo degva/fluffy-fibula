@@ -1,5 +1,4 @@
 #include <capp.h>
-#include <menu.h>
 
 /* Game related functions */
 CApp * CApp_new() {
@@ -11,7 +10,7 @@ CApp * CApp_new() {
   return app;
 }
 
-void Game_OnRender(CApp * C, TMap * M) {
+void Game_OnRender(CApp * C) {
   // Render the map
   SDL_Rect viewPort1;
   viewPort1.x = VP1_X;
@@ -19,7 +18,7 @@ void Game_OnRender(CApp * C, TMap * M) {
   viewPort1.w = VP1_W;
   viewPort1.h = VP1_H;
   SDL_RenderSetViewport(C->appRenderer, &viewPort1);
-  TMap_Render(M,C->appRenderer);
+  TMap_Render(C->map, C->appRenderer);
 
   // Render the side Menu
   /*
@@ -161,8 +160,8 @@ void Game_OnCleanup() {
   SDL_Quit();
 }
 
-void Game_OnEvent(CApp * C, TMap * M, SDL_Event * Event) {
-  TMap_handleEvent(M, Event);
+void Game_OnEvent(CApp * C, SDL_Event * Event) {
+  TMap_handleEvent(C->map, Event);
   if (Event->type == SDL_QUIT) {
     C->Running = false;
   }

@@ -7,14 +7,14 @@
 
 #ifndef MANO_H
 #define	MANO_H
-typedef struct _fluFlyCartMano fluFlyCartMano;
-struct _fluFlyCartMano{
-	//fluFlyGame *game;
+typedef struct _TCartMano TCartMano;
+struct _TCartMano{
+	//TGame *game;
 	TMList *list;
 
 };
-fluFlyCartMano * fluFlyCartMano_new();
-fluFlyCartMano * fluflyCartMano_add_element(fluFlyCartMano *discard , fluFlyCart * carta);
+TCartMano * TCartMano_new();
+TCartMano * fluflyCartMano_add_element(TCartMano *discard , TCart * carta);
 
 
 
