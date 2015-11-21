@@ -4,23 +4,19 @@
 #include <tlibs.h>
 // #include <tmlists.h> for the friend structure
 
-enum types {
-  ENEMY_ENT,  // enemigo
-  FRIEND_STR, // estructura amiga
-  // ENEMY_STR,  // estructura enemiga
-  ENT_TYPES_TOTAL
-};
-
 // Type Enemies
-typedef struct {
+
+typedef struct _TEnemy TEnemy;
+struct _TEnemy{
   char * name;
   int ataque;
   int defensa;
   int experiencia;
   SDL_Texture * picture;
-} TEnemy;
+};
 
 TEnemy * TEnemy_new(SDL_Renderer *);
+TArray * TEnemy_Create_Enemys(int);
 void TEnemy_render(TEnemy *, TCoord *, SDL_Renderer *);
 
 // Friend Structure
