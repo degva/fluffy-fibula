@@ -3,8 +3,8 @@
 
 #ifndef CARTAST_H
 #define CARTAST_H
-typedef struct _fluFlyCart fluFlyCart;
-struct _fluFlyCart {
+typedef struct _TCart TCart;
+struct _TCart {
 	const tchar *name ;
 	int points;
 	int type;
@@ -13,12 +13,12 @@ struct _fluFlyCart {
 };
 
 
-fluFlyCart * fluFlyCart_new(const tchar *name,int points,int type, const tchar *img);
+TCart * TCart_new(const tchar *name,int points,int type, const tchar *img);
 
-TArray * fluFlyCart_create_carts();
+TArray * TCart_create_carts();
 
-void fluFlyCart_modify_points (fluFlyCart * , int points);
-void fluFlyCart_render (fluFlyCart *);
+void TCart_modify_points (TCart * , int points);
+void TCart_render (TCart *);
 
 #endif	/* CARTA_H */
 

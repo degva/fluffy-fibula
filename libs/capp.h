@@ -17,8 +17,8 @@ typedef struct {
   TMenu * menu;
   TMap * map;
   //TSideMenu * sidemenu;
-  //TCartMano * mano;
-  //TEntities * entities;
+  TArray * mano;
+  TArray * entities;
   
 } CApp;
 
