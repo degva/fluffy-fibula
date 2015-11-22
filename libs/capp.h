@@ -18,8 +18,8 @@ typedef struct {
   TMap * map;
   //THeroe * heroe;
   //TSideMenu * sidemenu;
-  //TCartMano * mano;
-  //TEntities * entities;
+  TArray * mano;
+  TArray * entities;
   
 } CApp;
 

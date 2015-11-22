@@ -10,20 +10,18 @@
 #include "ttarray.h"
 
 
-typedef struct _fluFlyPJ fluFlyPJ;
-struct _fluFlyPJ {
+typedef struct _TPJ TPJ;
+struct _TPJ {
 	const tchar *name ;
 	int def;
-        int exp;
-        int nivel;
+  int exp;
+  int nivel;
 	const tchar *img;
-        fluFlyCartMano *mano;
-        
-	
+  TCartMano *mano;
 };
 
 
-fluFlyPJ * fluFlyPJ_new(const tchar *name,int def,int exp, int nivel,const tchar *img,fluFlyCartMano * mano);
+TPJ * TPJ_new(const tchar *name,int def,int exp, int nivel,const tchar *img,TCartMano * mano);
 
 
 
