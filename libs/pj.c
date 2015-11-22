@@ -3,15 +3,15 @@
 #include <stdio.h>
 #include "pj.h"
 
-/*static fluFlyPJ FLUFLY_PJ[] = { 
+/*static TPJ FLUFLY_PJ[] = { 
 	{"NULL",4,0,1,"img1_PJ.png"},
 	{NULL,0,0,NULL}
 };
 */
-fluFlyPJ * fluFlyPJ_new(const tchar *name,int def,int exp, int nivel,const tchar *img,fluFlyCartMano * mano){
+TPJ * TPJ_new(const tchar *name,int def,int exp, int nivel,const tchar *img,TCartMano * mano){
 	
-	fluFlyPJ * pj;
-	pj = malloc( sizeof (fluFlyPJ));
+	TPJ * pj;
+	pj = malloc( sizeof (TPJ));
 	pj->def= def;
 	pj->exp = exp;
 	pj->img = img;
