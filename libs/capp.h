@@ -16,6 +16,7 @@ typedef struct {
   // Game variables
   TMenu * menu;
   TMap * map;
+  //THeroe * heroe;
   //TSideMenu * sidemenu;
   //TCartMano * mano;
   //TEntities * entities;

@@ -8,15 +8,15 @@
 #include "ttarray.h"
 
 
-typedef struct _fluFlyCartAction fluFlyCartAction ;
+typedef struct _TCartAction TCartAction ;
 
-struct _fluFlyCartAction{
-	//fluFlyGame *game;
+struct _TCartAction{
+	//TGame *game;
 	TMList *list;
 
 };
 
-fluFlyCartAction * fluFlyCartAction_new();
+TCartAction * TCartAction_new();
 
 
 

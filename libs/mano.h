@@ -15,7 +15,7 @@ struct _TCartMano{
 TCartMano * TCartMano_new();
 void TCardMano_addElement(TCartMano *, TCart *);
 void TCardMano_selectCard(TCardMano *, int i);
-
+void TCardMano_crearMano(TCardMano *);
 
 
 

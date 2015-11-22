@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static fluFlyCart FLUFLY_CARTS[] = { 
+static TCart FLUFLY_CARTS[] = { 
 	{"move",2,1,"img1.png"},
 	{"attack",2,2,"img1.png"},
 	{"defend",2,3,"img1.png"},
@@ -13,10 +13,10 @@ static fluFlyCart FLUFLY_CARTS[] = {
 };
 
 
-fluFlyCart * fluFlyCart_new(const tchar *name,int points,int type, const tchar *img)
+TCart * TCart_new(const tchar *name,int points,int type, const tchar *img)
 {	
-	fluFlyCart * carta;
-	carta = malloc( sizeof (fluFlyCart));
+	TCart * carta;
+	carta = malloc( sizeof (TCart));
 	carta-> name = name;
 	carta-> points = points;
 	carta-> type = type;
@@ -26,16 +26,16 @@ fluFlyCart * fluFlyCart_new(const tchar *name,int points,int type, const tchar *
 };
 
 
-TArray * fluFlyCart_create_carts()
+TArray * TCart_create_carts()
 {
 	TArray * cartas;
-	fluFlyCart* carta ; 
+	TCart* carta ; 
 	int i,j;
         
 	cartas = t_array_new();
         for(j=0;j<16;j++){
             for ( i = 0 ; FLUFLY_CARTS[i].name != NULL; i++){
-                carta = fluFlyCart_new ( FLUFLY_CARTS[i].name,
+                carta = TCart_new ( FLUFLY_CARTS[i].name,
                 FLUFLY_CARTS[i].points+j,
                 FLUFLY_CARTS[i].type,
                 FLUFLY_CARTS[i].img);
@@ -46,7 +46,7 @@ TArray * fluFlyCart_create_carts()
         return (cartas);
 };
 
-void fluFlyCart_modify_points(fluFlyCart * carta , int points)
+void TCart_modify_points(TCart * carta , int points)
 {
 	carta->points = carta->points + points;
 

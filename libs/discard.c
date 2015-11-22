@@ -1,21 +1,21 @@
 #include "discard.h"
 #include "tmlist.h"
-fluFlyCartDiscard * fluFlyCartDiscard_new()
+TCartDiscard * TCartDiscard_new()
 {
-	fluFlyCartDiscard * discard;
-	discard = malloc (sizeof (fluFlyCartDiscard));
+	TCartDiscard * discard;
+	discard = malloc (sizeof (TCartDiscard));
 	discard ->list = t_mlist_new();
 	//discard -> game = game ;
 	return discard;
 }
 
-fluFlyCartDiscard * fluFlyCartDiscard_add_element (fluFlyCartDiscard * discard, fluFlyCart * carta)
+TCartDiscard * TCartDiscard_add_element (TCartDiscard * discard, TCart * carta)
 {
     t_mlist_prepend (T_MLIST (discard -> list), carta);
 }
 
 
-TArray * fluFlyCartDiscard_to_array(fluFlyCartDiscard * discard){
+TArray * TCartDiscard_to_array(TCartDiscard * discard){
     TArray *array ;
             array = t_array_new();
     TList * list = discard->list->start;
@@ -27,7 +27,7 @@ TArray * fluFlyCartDiscard_to_array(fluFlyCartDiscard * discard){
 
 
 }
-TArray * fluFlyCartDiscard_shuffle (TArray * array, int n ){
+TArray * TCartDiscard_shuffle (TArray * array, int n ){
     //colocar la semilla en el inicio
     //srand(time(NULL));
     int r = rand(); 

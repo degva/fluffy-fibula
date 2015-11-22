@@ -2,23 +2,23 @@
 #include "tmlist.h"
 
 
-fluFlyCartAction * fluFlyCartAction_new()
+TCartAction * TCartAction_new()
 {
-	fluFlyCartAction * Action;
-	Action = malloc (sizeof (fluFlyCartAction));
+	TCartAction * Action;
+	Action = malloc (sizeof (TCartAction));
 	Action ->list = t_mlist_new();
 	//Action -> game = game ;
 	return Action;
 }
 
-fluFlyCartAction * fluFlyCartAction_add_element (fluFlyCartAction * Action, fluFlyCart * carta)
+TCartAction * TCartAction_add_element (TCartAction * Action, TCart * carta)
 {
     t_mlist_prepend (T_MLIST (Action -> list), carta);
 }
 
 
-fluFlyCartAction * fluFlyCartarray_to_action(TArray * array,int n){
-    fluFlyCartAction * action = fluFlyCartAction_new();
+TCartAction * TCartarray_to_action(TArray * array,int n){
+    TCartAction * action = TCartAction_new();
     TList * inicio =action->list->start;
     inicio=NULL;
     int i = 0;

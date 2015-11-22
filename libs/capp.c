@@ -67,6 +67,15 @@ int Game_OnExecute(CApp * C) {
 
   // Create the Map
   C->map = TMap_new(C->appRenderer);
+
+  // Create the game variables
+  /*
+  C->heroe = THeroe_new();
+  C->mano = TCartMano_new();
+  C->entities = TEntities_new();
+  C->sidemenu = TSideMenu_new();
+  */
+
   // Show Game
   while(C->Running) {
     while(SDL_PollEvent(&Event)) {

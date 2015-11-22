@@ -5,16 +5,16 @@
 #include <time.h>
 
 #include "carta.h"
-typedef struct _fluFlyCartDiscard fluFlyCartDiscard ;
+typedef struct _TCartDiscard TCartDiscard ;
 
-struct _fluFlyCartDiscard{
-	//fluFlyGame *game;
+struct _TCartDiscard{
+	//TGame *game;
 	TMList *list;
 
 };
 
-fluFlyCartDiscard * fluFlyCartDiscard_new();
-fluFlyCartDiscard * fluflyCartDiscard_add_element(fluFlyCartDiscard *discard , fluFlyCart * carta);
+TCartDiscard * TCartDiscard_new();
+TCartDiscard * fluflyCartDiscard_add_element(TCartDiscard *discard , TCart * carta);
 
 
 #endif
