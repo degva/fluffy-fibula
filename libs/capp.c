@@ -23,7 +23,6 @@ void Game_OnRender(CApp * C) {
   TMap_Render(C->map, C->appRenderer);
 
   // Render the side Menu
-  /*
   SDL_Rect viewPort2;
   viewPort2.x = VP2_X
   viewPort2.y = VP2_Y
@@ -31,7 +30,6 @@ void Game_OnRender(CApp * C) {
   viewPort2.h = VP2_H
   SDL_RenderSetViewport(C->appRenderer, &viewPort2);
   TSideMenu_Render(M,C->appRenderer);
-  */
 }
 
 int Game_OnExecute(CApp * C) {
@@ -66,15 +64,14 @@ int Game_OnExecute(CApp * C) {
   }
 
   // Create the Map
-  C->map = TMap_new(C->appRenderer);
+  C->entities = TEnemy_createEnemies();
+  C->map = TMap_new(C->appRenderer, C->entities);
 
   // Create the game variables
-  /*
-  C->heroe = THeroe_new();
-  C->mano = TCartMano_new();
-  C->entities = TEntities_new();
-  C->sidemenu = TSideMenu_new();
-  */
+  C->heroe = THeroe_new(C->appRenderer);
+  C->mano = TCartMano_new(C->appRenderer);
+
+  C->sidemenu = TSideMenu_new(C->font, C->heroe, C->mano, C->map, C->appRenderer);
 
   // Show Game
   while(C->Running) {
@@ -82,7 +79,6 @@ int Game_OnExecute(CApp * C) {
       Game_OnEvent(C, &Event);
     }
     
-    //Game_OnLoop(C);
     Game_OnRender(C);
 
     // Render Present
@@ -161,6 +157,7 @@ void Game_OnCleanup() {
 
 void Game_OnEvent(CApp * C, SDL_Event * Event) {
   TMap_handleEvent(C->map, Event);
+  TSideMenu_handleEvent(Event);
   if (Event->type == SDL_QUIT) {
     C->Running = false;
   }

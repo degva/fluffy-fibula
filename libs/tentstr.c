@@ -34,18 +34,19 @@ TEnemy * TEnemy_new(SDL_Renderer * R) {
 
   return enemy;
 }
-TArray * TEnemy_Create_Enemys(int num,SDL_Renderer * R){
-    TArray * Enemies;
-    TEnemy *enemy;
-    int i ; 
-    enemies = t_array_new();
-    for (i=0;i<num,i++){
-        enemy = TEnemy_new (R);
-        t_array_append( enemies ,enemy);
-    }
 
+TLista * TEnemy_createEnemies(int num, SDL_Renderer * R){
+  TLista * enemies;
 
-    return (enemies);
+  TEnemy *enemy;
+  int i ; 
+  enemies = TLista_new();
+  for (i=0;i<num,i++){
+    enemy = TEnemy_new(R);
+    TLista_insertar(enemies, enemy);
+  }
+
+  return enemies;
 }
 
 

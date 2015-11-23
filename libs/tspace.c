@@ -1,12 +1,10 @@
 #include <tspace.h>
 
-void TSpace_init(TSpace * S, SDL_Renderer * R) {
+void TSpace_init(TSpace * S, SDL_Renderer * R, TEnemy * E) {
     S->descubierto = false;
     S->tipoDeSpace = 0;
     S->currentSprite = SPACE_TILE_OFF;
-
-    S->enemy = TEnemy_new(R);
-
+    S->enemy
     // Load tile surface for normal
     SDL_Surface * surf;
     surf = IMG_Load( "img/tile.png" );
@@ -38,7 +36,9 @@ void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Renderer * R) {
     printf("\t- ERROR");
   }
 
-  TEnemy_render(Ts->enemy, Tc, R);
+  if (Ts->enemy != NULL) {
+    TEnemy_render(Ts->enemy, Tc, R);
+  }
 }
 
 void TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord) {

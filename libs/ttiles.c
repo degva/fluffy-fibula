@@ -1,7 +1,8 @@
 #include <ttiles.h>
 
-void TTiles_init(TTiles * T, SDL_Renderer * R) {
+void TTiles_init(TTiles * T, SDL_Renderer * R, TEnemy * E) {
   int i;
+  int r = rand() % 7;
   // Create a new Tile with a bunch of new spaces
   // Give them each necesary value
   // Create the seven spaces
@@ -12,7 +13,11 @@ void TTiles_init(TTiles * T, SDL_Renderer * R) {
   for (i=0; i<NUM_SPACES; i++) {
     TSpace * newSpace;
     newSpace = malloc(sizeof(TSpace));
-    TSpace_init(newSpace, R);
+    if (r == i) {
+      TSpace_init(newSpace, R, E);
+    } else {
+      TSpace_init(newSpace, R, NULL);
+    } 
     // put the new space in the tile
     T->spaces[i] = newSpace;
     // Now interconect between the new and the cnetral

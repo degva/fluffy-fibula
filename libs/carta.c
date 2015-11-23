@@ -9,6 +9,7 @@ TCard * TCard_new(char *name,int points,int type, char * img, SDL_Renderer * R)
   carta->type = type;
   carta->img = img;
 
+  SDL_Surface * surf;
   surf = IMG_Load(img);
   if (surf == NULL)
     printf("Card image was not loaded!!");

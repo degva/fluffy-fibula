@@ -16,11 +16,10 @@ typedef struct {
   // Game variables
   TMenu * menu;
   TMap * map;
-  //THeroe * heroe;
-  //TSideMenu * sidemenu;
-  TArray * mano;
-  TArray * entities;
-  
+  THeroe * heroe;
+  TSideMenu * sidemenu;
+  TLista * mano;
+  TLista * entities;
 } CApp;
 
 CApp * CApp_new();

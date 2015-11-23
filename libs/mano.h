@@ -6,13 +6,12 @@
 #include <action.h> 
 #include <discard.h>
 
-typedef struct _TCardMano TCardMano;
-struct _TCardMano{
+typedef struct {
 	TLista *list;
   TCardAction * action;
   TCardDiscard * discard;
   int level;
-};
+} TCardMano;
 
 TCardMano * TCardMano_new(SDL_Renderer *);
 

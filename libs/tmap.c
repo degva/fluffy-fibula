@@ -1,6 +1,6 @@
 #include <tmap.h>
 
-TMap * TMap_new(SDL_Renderer * R) {
+TMap * TMap_new(SDL_Renderer * R, TLista * E) {
   TMap * M;
   M = (TMap *) malloc(sizeof(TMap));
   int i;
@@ -9,17 +9,17 @@ TMap * TMap_new(SDL_Renderer * R) {
   // Set current Tile
   M->currentTile = 0;
   // Attach it to the Map with the coordinates of the middle of the screen
-  TMap_putNewTileCoords(M, VP1_W/2, VP1_H/2, R);
+  TMap_putNewTileCoords(M, VP1_W/2, VP1_H/2, R, TLista_pop(E));
   return M;
 }
 
-void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R) {
+void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R, TEnemy * E) {
   int curTile = M->currentTile;
   float goldNum = 0.76;
   // Create tile
   TTiles * tile;
   tile = malloc(sizeof(TTiles));
-  TTiles_init(tile, R);
+  TTiles_init(tile, R, E);
   
   // this is the first tile ( the one in the center )
   M->tiles[curTile] = tile;
@@ -66,11 +66,12 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R) {
   M->currentTile += 1;
 }
 
-void TMap_addNewTile(TMap * M, int pos, SDL_Renderer * R) {
+void TMap_addNewTile(TMap * M, int pos, SDL_Renderer * R, TLista * E) {
   int posx = ((TCoord *) M->tiles[M->currentTile])->x;
   int posy = ((TCoord *) M->tiles[M->currentTile])->y;
   int des = 1.2438;
   int new_posx, new_posy;
+  // depending by where the heroe is going
   switch (pos) {
     case NOR_EAST:
       new_posx = posx + 2*SPACESIZE;
@@ -97,7 +98,7 @@ void TMap_addNewTile(TMap * M, int pos, SDL_Renderer * R) {
       new_posy = posy + 3*des*SPACESIZE;
       break;
   }
-  TMap_putNewTileCoords(M, new_posx, new_posy, R);
+  TMap_putNewTileCoords(M, new_posx, new_posy, R, TLista_pop(E));
 }
 
 void TMap_Render(TMap * M, SDL_Renderer * R) {

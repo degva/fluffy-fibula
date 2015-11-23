@@ -34,7 +34,7 @@ typedef struct _TSpace {
 // Mira este link: http://stackoverflow.com/questions/822323/how-to-generate-a-random-number-in-c
 // Debe usar el enum tiposDeSpace para create el space
 // Nota: debe poner spaces en espacios en blanco
-void TSpace_init(TSpace * S, SDL_Renderer * R);
+void TSpace_init(TSpace * S, SDL_Renderer * R, TEnemy *);
 
 // hace un render en el Surface S
 // ver tmenu.c funcion TMenu_onRender() para ver funcionalidad
