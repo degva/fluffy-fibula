@@ -1,47 +1,37 @@
 #include "discard.h"
 #include "tmlist.h"
-TCartDiscard * TCartDiscard_new()
-{
-	TCartDiscard * discard;
-	discard = malloc (sizeof (TCartDiscard));
-	discard ->list = t_mlist_new();
-	//discard -> game = game ;
-	return discard;
-}
+TCardDiscard * TCardDiscard_new(SDL_Renderer * R) {
+  int i;
+  TCardDiscard * discard;
+  discard = malloc(sizeof(TCardDiscard));
+  discard->list = TLista_init();
 
-TCartDiscard * TCartDiscard_add_element (TCartDiscard * discard, TCart * carta)
-{
-    t_mlist_prepend (T_MLIST (discard -> list), carta);
-}
-
-
-TArray * TCartDiscard_to_array(TCartDiscard * discard){
-    TArray *array ;
-            array = t_array_new();
-    TList * list = discard->list->start;
-    while (list!= NULL){
-        t_array_append ( array,  list->data);
-        list=list->next;
+  TCard * card;
+  for(j=0;j<8;j++){
+    for ( i = 0 ; FLUFLY_CARDS[i].name != NULL; i++){
+      carta = TCart_new ( FLUFLY_CARDS[i].name,
+          FLUFLY_CARDS[i].points+j,
+          FLUFLY_CARDS[i].type,
+          FLUFLY_CARDS[i].img,
+          R);
+      TLista_insertar(discard->list, carta);
     }
-    return (array) ;
+  }
 
-
+  return discard;
 }
-TArray * TCartDiscard_shuffle (TArray * array, int n ){
-    //colocar la semilla en el inicio
-    //srand(time(NULL));
-    int r = rand(); 
-    int i;
-    
-    for ( i = n-1 ; i >= 1; i--){
-        int pos = rand() % i;
-        tpointer *aux;
-        aux = array->vector[i];
-        array->vector[i] = array->vector[pos];
-        array->vector[pos] = aux;
-    }
-    return array;
-    /* creditos juan tomairo  */
+
+void TCardDiscard_addElement (TCardDiscard * discard, TCard * carta) {
+  TLista_insertar(discard->list, carta);
+}
+
+void TCardDiscard_shuffle (TCardDiscard * D) {
+  int n = TLista_tamanho(D->list);
+  int i;
+  for (i =0; i<n-1; i++) {
+    int j = i + rand() / (RAND_MAX / (n-i) +1);
+    TLista_swapNodos(D->lista, i, j);
+  }
 }
 
 

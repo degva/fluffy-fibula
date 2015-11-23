@@ -1,24 +1,33 @@
 #include <tlibs.h>
-#include "ttarray.h"
 
 #ifndef CARTAST_H
 #define CARTAST_H
-typedef struct _TCart TCart;
-struct _TCart {
-	const tchar *name ;
-	int points;
-	int type;
-	const tchar *img;
-  bool selected;
+
+static TCard FLUFLY_CARDS[] = { 
+  {"Move",2,1,"img/move.png"},
+  {"Attack",2,2,"img/attack.png"},
+  {"Defend",2,3,"img/defend.png"},
+  {"Heal",2,4,"img/heal.png"},
+  {"Buy",2,5,"img/buy.png"},
+  {NULL,0,0,NULL}
 };
 
+typedef struct {
+	char *name ;
+	int points;
+	int type;
+	SDL_Texture *img;
+  bool selected;
+} TCard;
 
-TCart * TCart_new(const tchar *name,int points,int type, const tchar *img);
+TCard * TCard_new(char *name, int points, int type, char *img);
 
-TArray * TCart_create_carts();
+// -- Por que???
+// TArray * TCard_create_carts();
 
-void TCart_modify_points (TCart * , int points);
-void TCart_render (TCart *);
+void TCard_modify_points (TCard * , int points);
+void TCard_selectToggle(TCard *);
+void TCard_render (TCard *, SDL_Renderer *, TCoord *);
 
 #endif	/* CARTA_H */
 

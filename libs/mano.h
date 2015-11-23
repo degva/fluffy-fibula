@@ -1,21 +1,27 @@
-/* 
- * File:   Mano.h
- * Author: fredy
- *
- * Created on 14 de noviembre de 2015, 11:26 PM
- */
-
 #ifndef MANO_H
 #define	MANO_H
-typedef struct _TCartMano TCartMano;
-struct _TCartMano{
-	TMList *list;
+
+#include <tlibs.h>
+#include <tlist.h>
+#include <action.h> 
+#include <discard.h>
+
+typedef struct _TCardMano TCardMano;
+struct _TCardMano{
+	TLista *list;
+  TCardAction * action;
+  TCardDiscard * discard;
+  int level;
 };
 
-TCartMano * TCartMano_new();
-void TCardMano_addElement(TCartMano *, TCart *);
-void TCardMano_selectCard(TCardMano *, int i);
-void TCardMano_crearMano(TCardMano *);
+TCardMano * TCardMano_new(SDL_Renderer *);
+
+void TCardMano_takeFromAction(TCardAction *, int);
+void TCardMano_sendToDiscard(TCardMano *, int);
+void TCardMano_handleEvent(TCardMano *);
+void TCardMano_selectCard(TCardMano * M, int pos) {
+
+//void TCardMano_render(TCardMano *, TList * Coord);
 
 
 

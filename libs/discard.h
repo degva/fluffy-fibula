@@ -1,20 +1,15 @@
 #ifndef _DISCARD_H
 #define _DISCARD_H
 
-#include <string.h>
-#include <time.h>
+#include <carta.h>
+typedef struct _TCardDiscard TCardDiscard ;
 
-#include "carta.h"
-typedef struct _TCartDiscard TCartDiscard ;
-
-struct _TCartDiscard{
-	//TGame *game;
-	TMList *list;
-
+struct _TCardDiscard{
+	TLista *list;
 };
 
-TCartDiscard * TCartDiscard_new();
-TCartDiscard * fluflyCartDiscard_add_element(TCartDiscard *discard , TCart * carta);
-
+TCardDiscard * TCardDiscard_new(SDL_Renderer *);
+void TCardDiscard_addElement(TCardDiscard *discard , TCard * carta);
+void TCardDiscard_shuffle(TCardDiscard * discard);
 
 #endif
