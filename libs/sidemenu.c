@@ -24,11 +24,15 @@ TSideMenu * TSideMenu_new(TTF_Font * F, THeroe * hero, TCardMano * cartas, TMap 
   int i, x, y;
   x = 11;
   y = 11;
+  int j = 0;
   for (i = 0; i < 40; i++) {
     TCoord * coord;
     coord = malloc(sizeof(TCoord));
     coord->x = x + 32*i + i;
-    coord->y = y + 32*i + i;
+    coord->y = y + 32*j + j;
+    if ((i+1) % 9 == 0) {
+      j++;
+    }
 
     TLista_insertar(sm->cartasCoords, coord);
   }
@@ -53,10 +57,13 @@ void TSideMenu_render(TSideMenu * SM, SDL_Renderer * R) {
   // Render all cards
   TCardMano_render(SM->cartas, SM->cartasCoords, R);
   // Render selected card if any
+
   // Render Hero status
+
   // Render selected tile data
+
   // Render pay button
   SM->button->pos_y = WIN_HEIGHT - SM->button->height - 11;
-  SM->button->pos_x = WIN_WIDTH + 11;
+  SM->button->pos_x = 150 - SM->button->width/2;
   TButton_render(SM->button, R);
 }
