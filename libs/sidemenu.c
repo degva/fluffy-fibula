@@ -85,6 +85,8 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
     dst.h = textSurface->h;
     textTexture = SDL_CreateTextureFromSurface(R, textSurface);
     SDL_RenderCopy(R, textTexture, NULL, &dst);
+    SDL_DestroyTexture(textTexture);
+    SDL_FreeSurface(textSurface);
 
     textSurface = TTF_RenderText_Solid(F, puntos, color0);
     dst.x += dst.w + 10;
@@ -134,6 +136,8 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
     dst2.h = textSurface->h;
     textTexture = SDL_CreateTextureFromSurface(R, textSurface);
     SDL_RenderCopy(R, textTexture, NULL, &dst2);
+    SDL_DestroyTexture(textTexture);
+    SDL_FreeSurface(textSurface);
 
     textSurface = TTF_RenderText_Solid(F, puntos, color0);
     dst2.x += dst2.w + 10;
@@ -155,6 +159,9 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
       dst2.h = textSurface->h;
       textTexture = SDL_CreateTextureFromSurface(R, textSurface);
       SDL_RenderCopy(R, textTexture, NULL, &dst2);
+      
+      SDL_DestroyTexture(textTexture);
+      SDL_FreeSurface(textSurface);
 
       char at[4], def[4], exp[4];
       sprintf(at, "A: %d", enemy->ataque);
