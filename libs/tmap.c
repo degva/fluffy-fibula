@@ -9,7 +9,8 @@ TMap * TMap_new(SDL_Renderer * R, TLista * E) {
   // Set current Tile
   M->currentTile = 0;
   // Attach it to the Map with the coordinates of the middle of the screen
-  TMap_putNewTileCoords(M, VP1_W/2, VP1_H/2, R, TLista_pop(E));
+
+  TMap_putNewTileCoords(M, VP1_W/2, VP1_H/2, R, TLista_pop(E)->elem);
   return M;
 }
 
@@ -20,7 +21,7 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R, TEnem
   TTiles * tile;
   tile = malloc(sizeof(TTiles));
   TTiles_init(tile, R, E);
-  
+
   // this is the first tile ( the one in the center )
   M->tiles[curTile] = tile;
   // put their coords
@@ -98,7 +99,7 @@ void TMap_addNewTile(TMap * M, int pos, SDL_Renderer * R, TLista * E) {
       new_posy = posy + 3*des*SPACESIZE;
       break;
   }
-  TMap_putNewTileCoords(M, new_posx, new_posy, R, TLista_pop(E));
+  TMap_putNewTileCoords(M, new_posx, new_posy, R, TLista_pop(E)->elem);
 }
 
 void TMap_Render(TMap * M, SDL_Renderer * R) {

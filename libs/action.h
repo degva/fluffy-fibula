@@ -5,13 +5,12 @@
 #include <carta.h>
 #include <discard.h>
 
-typedef struct _TCartAction{
+typedef struct {
 	TLista *list;
-} TCartAction;
+} TCardAction;
 
-TCartAction * TCartAction_new();
+TCardAction * TCardAction_new();
 void TCardAction_takeFromDiscard(TCardAction *, TCardDiscard *);
 int TCardAction_numCards(TCardAction *);
 
 #endif	/* ACTION_H */
-

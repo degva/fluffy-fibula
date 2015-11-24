@@ -30,18 +30,18 @@ TEnemy * TEnemy_new(SDL_Renderer * R) {
       img = IMG_Load( "img/monster5.png" );
       break;
   }
-  enemy->picture = SDL_CreateTextureFromSurface( R, img );
+  enemy->texture = SDL_CreateTextureFromSurface( R, img );
 
   return enemy;
 }
 
 TLista * TEnemy_createEnemies(int num, SDL_Renderer * R){
   TLista * enemies;
-
   TEnemy *enemy;
-  int i ; 
-  enemies = TLista_new();
-  for (i=0;i<num,i++){
+  int i ;
+  enemies = malloc(sizeof(TLista));
+  TLista_init(enemies);
+  for (i=0;i<num;i++){
     enemy = TEnemy_new(R);
     TLista_insertar(enemies, enemy);
   }
@@ -57,5 +57,5 @@ void TEnemy_render(TEnemy * Te, TCoord * C, SDL_Renderer * R) {
   dst.w = 32;
   dst.h = 32;
 
-  SDL_RenderCopy(R, Te->picture, NULL, &dst);
+  SDL_RenderCopy(R, Te->texture, NULL, &dst);
 }

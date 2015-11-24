@@ -2,11 +2,11 @@
 #define _DISCARD_H
 
 #include <carta.h>
-typedef struct _TCardDiscard TCardDiscard ;
+#include <tlist.h>
 
-struct _TCardDiscard{
+typedef struct {
 	TLista *list;
-};
+} TCardDiscard;
 
 TCardDiscard * TCardDiscard_new(SDL_Renderer *);
 void TCardDiscard_addElement(TCardDiscard *discard , TCard * carta);

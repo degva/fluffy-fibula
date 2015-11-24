@@ -3,9 +3,10 @@
 
 #include <tmap.h>
 #include <menu.h>
-// #include <sidemenu.h>
-// #include <mano.h>
-// #include <tentstr.h>
+#include <sidemenu.h>
+#include <mano.h>
+#include <tentstr.h>
+#include <theroe.h>
 
 typedef struct {
   bool Running;
@@ -18,8 +19,9 @@ typedef struct {
   TMap * map;
   THeroe * heroe;
   TSideMenu * sidemenu;
-  TLista * mano;
+  TCardMano * mano;
   TLista * entities;
+  int level;
 } CApp;
 
 CApp * CApp_new();

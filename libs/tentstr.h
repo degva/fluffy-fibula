@@ -14,7 +14,7 @@ typedef struct {
 } TEnemy;
 
 TEnemy * TEnemy_new(SDL_Renderer *);
-TLista * TEnemy_createEnemies(int);
+TLista * TEnemy_createEnemies(int, SDL_Renderer * R);
 void TEnemy_render(TEnemy *, TCoord *, SDL_Renderer *);
 
 // Friend Structure

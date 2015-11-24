@@ -11,10 +11,10 @@
 typedef struct {
   TButton * button;
   // SDL_Texture * background;
-  TMapa * mapa;      // pointer to the map
+  TMap * mapa;      // pointer to the map
   TCardMano * cartas;   // pointer to the hands
   THeroe * hero; // pointer to the hero
-  // TLista * cartasCoords;
+  TLista * cartasCoords;
 } TSideMenu;
 
 TSideMenu * TSideMenu_new(TTF_Font *, THeroe *, TCardMano *, TMap *, SDL_Renderer * R); //,THand *);

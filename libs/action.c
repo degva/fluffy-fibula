@@ -1,16 +1,17 @@
 #include "action.h"
 
-TCartAction * TCartAction_new()
+TCardAction * TCardAction_new()
 {
-	TCartAction * Action;
-	Action = malloc (sizeof (TCartAction));
-	Action->list = NULL;
-	return Action;
+  TCardAction * Action;
+  Action = malloc(sizeof(TCardAction));
+  Action->list = NULL;
+  return Action;
 }
 
 void TCardAction_takeFromDiscard(TCardAction * A, TCardDiscard * D) {
   A->list = D->list;
-  D->list = TLista_init();
+  D->list = malloc(sizeof(TLista));
+  TLista_init(D->list);
 }
 
 int TCardAction_numCards(TCardAction * A) {

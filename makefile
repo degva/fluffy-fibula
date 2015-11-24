@@ -8,17 +8,36 @@ ODIR=objs
 BLD=builds
 
 
-#OBJS specifies which files to compile as part of the project 
-_OBJS = main.o capp.o menu.o tmap.o ttile.o tspace.o tbutton.o tentstr.o
+#OBJS specifies which files to compile as part of the project
+_OBJS = main.o capp.o menu.o tmap.o ttile.o tspace.o tbutton.o tentstr.o sidemenu.o mano.o action.o discard.o carta.o tlist.o theroe.o
 OBJS=$(patsubst %,$(ODIR)/%,$(_OBJS))
 
 all: app
+
+# Heroe
+$(ODIR)/theroe.o: $(LDIR)/theroe.c
+	$(GCC) -o $@ -c $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
 
 # General stuff
 $(ODIR)/tbutton.o: $(LDIR)/tbutton.c
 	$(GCC) -o $@ -c $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
 
 # Baraja...
+$(ODIR)/tlist.o: $(LDIR)/tlist.c
+	$(GCC) -o $@ -c $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
+$(ODIR)/carta.o: $(LDIR)/carta.c
+	$(GCC) -o $@ -c $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
+$(ODIR)/discard.o: $(LDIR)/discard.c
+	$(GCC) -o $@ -c $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
+$(ODIR)/action.o: $(LDIR)/action.c
+	$(GCC) -o $@ -c $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
+$(ODIR)/mano.o: $(LDIR)/mano.c
+	$(GCC) -o $@ -c $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
+
+# Side Menu
+$(ODIR)/sidemenu.o: $(LDIR)/sidemenu.c
+	$(GCC) -o $@ -c $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
+
 # Enemigos y estructuras amigas
 $(ODIR)/tentstr.o: $(LDIR)/tentstr.c
 	$(GCC) -o $@ -c $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)

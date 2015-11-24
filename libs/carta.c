@@ -1,13 +1,12 @@
 #include <carta.h>
 
 TCard * TCard_new(char *name,int points,int type, char * img, SDL_Renderer * R)
-{	
+{
   TCard * carta;
   carta = malloc( sizeof (TCard));
   carta->name = name;
   carta->points = points;
   carta->type = type;
-  carta->img = img;
 
   SDL_Surface * surf;
   surf = IMG_Load(img);
@@ -44,4 +43,3 @@ void TCard_render(TCard * C, SDL_Renderer * R, TCoord * Tc) {
     printf("\t- ERROR at TCard_render");
   }
 }
-

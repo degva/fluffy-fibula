@@ -1,18 +1,25 @@
-#include "discard.h"
-#include "tmlist.h"
+#include <discard.h>
+
 TCardDiscard * TCardDiscard_new(SDL_Renderer * R) {
-  int i;
+
+  char *names[5] = {"Move", "Attack", "Defend", "Heal", "Buy"};
+  int points[5] = {2,2,2,2,2};
+  int type[5] = {1,2,3,4,5};
+  char *imagenes[5] = {"img/c-move.png", "img/c-attack.png", "img/c-defend.png", "img/c-heal.png", "img/c-buy.png"};
+
+  int i, j;
   TCardDiscard * discard;
   discard = malloc(sizeof(TCardDiscard));
-  discard->list = TLista_init();
+  discard->list = malloc(sizeof(TLista));
+  TLista_init(discard->list);
 
-  TCard * card;
+  TCard * carta;
   for(j=0;j<8;j++){
-    for ( i = 0 ; FLUFLY_CARDS[i].name != NULL; i++){
-      carta = TCart_new ( FLUFLY_CARDS[i].name,
-          FLUFLY_CARDS[i].points+j,
-          FLUFLY_CARDS[i].type,
-          FLUFLY_CARDS[i].img,
+    for ( i = 0 ; i < 5; i++){
+      carta = TCard_new ( names[i],
+          points[i],
+          type[i],
+          imagenes[i],
           R);
       TLista_insertar(discard->list, carta);
     }
@@ -29,9 +36,7 @@ void TCardDiscard_shuffle (TCardDiscard * D) {
   int n = TLista_tamanho(D->list);
   int i;
   for (i =0; i<n-1; i++) {
-    int j = i + rand() / (RAND_MAX / (n-i) +1);
-    TLista_swapNodos(D->lista, i, j);
+    int j = i + rand() / (RAND_MAX / (n-i) +1) - 2;
+    TLista_swapNodos(D->list, i, j);
   }
 }
-
-

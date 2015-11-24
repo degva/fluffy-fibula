@@ -9,6 +9,7 @@ CApp * CApp_new() {
   app->appRenderer = NULL;
   app->menu = NULL;
   app->map = NULL;
+  app->level = 2;
   return app;
 }
 
@@ -24,12 +25,12 @@ void Game_OnRender(CApp * C) {
 
   // Render the side Menu
   SDL_Rect viewPort2;
-  viewPort2.x = VP2_X
-  viewPort2.y = VP2_Y
-  viewPort2.w = VP2_W
-  viewPort2.h = VP2_H
+  viewPort2.x = VP2_X;
+  viewPort2.y = VP2_Y;
+  viewPort2.w = VP2_W;
+  viewPort2.h = VP2_H;
   SDL_RenderSetViewport(C->appRenderer, &viewPort2);
-  TSideMenu_Render(M,C->appRenderer);
+  TSideMenu_render(C->sidemenu, C->appRenderer);
 }
 
 int Game_OnExecute(CApp * C) {
@@ -57,19 +58,19 @@ int Game_OnExecute(CApp * C) {
 
     // Render Present
     SDL_RenderPresent( C->appRenderer );
-    
+
     // Clear Renderer
     SDL_SetRenderDrawColor( C->appRenderer, 0x00, 0x00, 0x00, 0x00 );
     SDL_RenderClear( C->appRenderer );
   }
 
   // Create the Map
-  C->entities = TEnemy_createEnemies();
+  C->entities = TEnemy_createEnemies(8, C->appRenderer);
   C->map = TMap_new(C->appRenderer, C->entities);
 
   // Create the game variables
   C->heroe = THeroe_new(C->appRenderer);
-  C->mano = TCartMano_new(C->appRenderer);
+  C->mano = TCardMano_new(C->appRenderer, C->level);
 
   C->sidemenu = TSideMenu_new(C->font, C->heroe, C->mano, C->map, C->appRenderer);
 
@@ -78,7 +79,7 @@ int Game_OnExecute(CApp * C) {
     while(SDL_PollEvent(&Event)) {
       Game_OnEvent(C, &Event);
     }
-    
+
     Game_OnRender(C);
 
     // Render Present
@@ -96,7 +97,7 @@ bool Game_OnInit(CApp * C) {
     printf("Could not init SDL\n");
     return false;
   }
- 
+
   if (!SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" )) {
     printf("Linear texture could not be enabled\n");
     SDL_Quit();
@@ -109,7 +110,7 @@ bool Game_OnInit(CApp * C) {
     SDL_Quit();
     return false;
   }
-  
+
   C->appWindow = SDL_CreateWindow(
     "Cualquier cosa",
     SDL_WINDOWPOS_UNDEFINED,
@@ -157,9 +158,8 @@ void Game_OnCleanup() {
 
 void Game_OnEvent(CApp * C, SDL_Event * Event) {
   TMap_handleEvent(C->map, Event);
-  TSideMenu_handleEvent(Event);
+  TSideMenu_handleEvent(C->sidemenu, Event);
   if (Event->type == SDL_QUIT) {
     C->Running = false;
   }
 }
-

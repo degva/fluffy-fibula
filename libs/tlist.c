@@ -93,7 +93,7 @@ int TLista_estaEnLista(TLista *L, TElemento e) {
 void TLista_imprimir(TLista *L) {
   TNodo *ptrRec = L->inicio;
   while (ptrRec != NULL) {
-    printf("%d ", ptrRec->elem);
+    // printf("%d ", ptrRec->elem);
     ptrRec = ptrRec->sig;
   }
 }
@@ -103,16 +103,25 @@ TNodo * TLista_takeNodo(TLista *L, int pos) {
   int i;
   nodoAnt = NULL;
   nodo = L->inicio;
-  if (pos == 1) {
+  if (pos == 0) {
     L->inicio = nodo->sig;
   } else {
     for (i=0; i<pos; i++) {
-      nodoAnt = nodo;
-      nodo = nodo->sig;
+      if (nodo->sig != NULL) {
+        nodoAnt = nodo;
+        nodo = nodo->sig;
+      } else {
+        break;
+      }
     }
-    nodoAnt->sig = nodo->sig;
+    if (nodo->sig == NULL) {
+      nodoAnt->sig = NULL;
+    } else {
+      nodoAnt->sig = nodo->sig;
+    }
   }
   L->numElem--;
+  nodo->sig = NULL;
   return nodo;
 }
 
@@ -121,10 +130,10 @@ void TLista_putNodoIn(TLista *L, TNodo *N, int pos) {
   int i;
   nodoAnt = NULL;
   nodo = L->inicio;
-  if (pos == 1) {
+  if (pos == 0) {
     N->sig = L->inicio;
     L->inicio = N;
-  } else if (pos == TLista_tamanho(L)) {
+  } else if (pos == TLista_tamanho(L) + 1) {
     L->fin->sig = N;
     L->fin = N;
   } else {

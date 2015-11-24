@@ -1,24 +1,42 @@
 #include <tspace.h>
 
 void TSpace_init(TSpace * S, SDL_Renderer * R, TEnemy * E) {
-    S->descubierto = false;
-    S->tipoDeSpace = 0;
-    S->currentSprite = SPACE_TILE_OFF;
-    S->enemy
-    // Load tile surface for normal
-    SDL_Surface * surf;
-    surf = IMG_Load( "img/tile.png" );
-    if (surf == NULL)
-      printf("Tile were not loaded!!");
-    S->texture[SPACE_TILE_OFF] = SDL_CreateTextureFromSurface( R, surf );
-    // Load tile surface for hover
-    surf = IMG_Load( "img/tile-hover.png" );
-    if (surf == NULL)
-      printf("Tile were not loaded!!");
-    S->texture[SPACE_TILE_HOVER] = SDL_CreateTextureFromSurface( R, surf );
-    
-    SDL_FreeSurface(surf);
-    // S->spaces = (TSpace *) malloc(sizeof(TSpace)*6);
+  int r = rand() % 5;
+  S->descubierto = false;
+  S->tipoDeSpace = 0;
+  S->currentSprite = SPACE_TILE_OFF;
+  S->enemy = E;
+  // Load tile surface for normal
+  SDL_Surface * surf;
+  switch ( r ) {
+    case 0 :
+      surf = IMG_Load( "img/t-plaina.png" );
+      break;
+    case 1 :
+      surf = IMG_Load( "img/t-forest.png" );
+      break;
+    case 2 :
+      surf = IMG_Load( "img/t-hill.png" );
+      break;
+    case 3 :
+      surf = IMG_Load( "img/t-swamp.png" );
+      break;
+    case 4 :
+      surf = IMG_Load( "img/t-unreachable.png" );
+      break;
+  }
+
+  if (surf == NULL)
+    printf("Tile were not loaded!!");
+  S->texture[SPACE_TILE_OFF] = SDL_CreateTextureFromSurface( R, surf );
+  // Load tile surface for hover
+  surf = IMG_Load( "img/tile-hover.png" );
+  if (surf == NULL)
+    printf("Tile were not loaded!!");
+  S->texture[SPACE_TILE_HOVER] = SDL_CreateTextureFromSurface( R, surf );
+
+  SDL_FreeSurface(surf);
+  // S->spaces = (TSpace *) malloc(sizeof(TSpace)*6);
 };
 
 void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Renderer * R) {
@@ -43,9 +61,9 @@ void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Renderer * R) {
 
 void TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord) {
   if (
-    e->type == SDL_MOUSEMOTION
-    //|| e->type == SDL_MOUSEBUTTONDOWN
-  ) {
+      e->type == SDL_MOUSEMOTION
+      //|| e->type == SDL_MOUSEBUTTONDOWN
+     ) {
     // Get mouse position
     int ex, ey;
     SDL_GetMouseState( &ex, &ey );
@@ -59,7 +77,7 @@ void TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord) {
         ey < 0.5012*(ex - coord->x) + coord->y + 0.7494*SPACESIZE &&
         ey > 0.5012*(ex - coord->x) + coord->y - 0.2506*SPACESIZE &&
         ey < 0.5012*(-ex + coord->x + SPACESIZE) + coord->y + 0.7494*SPACESIZE
-        )
+       )
     {
       inside = true;
     }
@@ -74,11 +92,11 @@ void TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord) {
         case SDL_MOUSEMOTION:
           Ts->currentSprite = SPACE_TILE_HOVER;
           break;
-        /*
-        case SDL_MOUSEBUTTONDOWN:
-          B->currentSprite = BUTTON_SPRITE_MOUSE_DOWN;
-          break;
-        */
+          /*
+             case SDL_MOUSEBUTTONDOWN:
+             B->currentSprite = BUTTON_SPRITE_MOUSE_DOWN;
+             break;
+             */
       }
     }
   }

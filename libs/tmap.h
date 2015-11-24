@@ -32,9 +32,9 @@ typedef struct {
 } TMap;
 
 // Initialize a Map
-TMap * TMap_new(SDL_Renderer * R, TEnemy *);
+TMap * TMap_new(SDL_Renderer * R, TLista *);
 // put a new Tile in the coords and tiles
-void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R);
+void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R, TEnemy *);
 // add a new Tile
 void TMap_addNewTile(TMap * M, int pos, SDL_Renderer * R, TLista * E);
 // Renders a Map
