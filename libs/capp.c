@@ -73,8 +73,30 @@ bool Game_OnInit(CApp * C) {
   return true;
 }
 
+void Game_moveHero(CApp * C) {
+  // Move if only the button pay has been clicked
+  TSideMenu * sM = C->sidemenu;
+  if (sM->paid == true && sM->selectedCard != NULL) { 
+    // check if the card was move and also the selected space is 
+    // near the actual space
+    int cT = C->map->currTile;
+    int cS = C->map->currSpace;
+    TSpace * space =  ((TTiles *) C->map->tiles[cT])->spaces[cS];
+    TCard * card = sM->selectedCard;
+    if (card->type == 1 && card->points >= space->tipoDeSpace) {
+      C->map->actualTile = cT;
+      C->map->actualSpace = cS;
+      // should pop by the selected card, no select card*
+      TSideMenu_popTheHand(C->sidemenu);
+    }
+    sM->paid = false;
+    sM->selectedCard = NULL;
+  }
+}
+
 void Game_OnEvent(CApp * C, SDL_Event * Event) {
   TMap_handleEvent(C->map, Event);
+  Game_moveHero(C);
   TSideMenu_handleEvent(C->sidemenu, Event);
   // TODO: pass to the fight lib the sidemenu
   // and let it check if the button "pay" have been clicked

@@ -10,7 +10,7 @@ TCardMano * TCardMano_new(SDL_Renderer * R, int level) {
   mano->discard = TCardDiscard_new(R);
   mano->level = 2;
 
-  //TCardDiscard_shuffle(mano->discard);
+  TCardDiscard_shuffle(mano->discard);
   TCardAction_takeFromDiscard(mano->action, mano->discard);
   TCardMano_takeFromAction(mano, level);
 
@@ -32,8 +32,8 @@ void TCardMano_takeFromAction(TCardMano * mano, int num) {
   }
 }
 
-void TCardMano_sendToDiscard(TCardMano * mano, int num) {
-  TNodo * card = TLista_takeNodo(mano->list, num);
+void TCardMano_sendToDiscard(TCardMano * mano, TCard * c) {
+  TNodo * card = TLista_takeNodoByElement(mano->list, c);
   TCardDiscard_addElement(mano->discard, card->elem);
 }
 

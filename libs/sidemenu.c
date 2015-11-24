@@ -29,6 +29,8 @@ TSideMenu * TSideMenu_new(TTF_Font * F, THeroe * hero, TCardMano * cartas, TMap 
   sm->selectedCard = NULL;
   sm->selectedSpace = NULL;
 
+  sm->paid = false;
+
   int i, x, y;
   x = 11;
   y = 11;
@@ -55,6 +57,19 @@ void TSideMenu_handleEvent(TSideMenu * SM, SDL_Event * E) {
   SM->button->pos_x = WIN_WIDTH - 200 + SM->button->width/2;
   TButton_handleEvent(SM->button, E);
   SM->button->pos_x = 150 - SM->button->width/2;
+  
+  // if it was clicked, then set paid to true
+  if (SM->button->currentSprite == BUTTON_SPRITE_MOUSE_DOWN) {
+    SM->paid = true;
+  }
+}
+
+void _TSideMenu_priv_render(SDL_Renderer * R, SDL_Texture * T, SDL_Rect * r, SDL_Surface * S) {
+  T = SDL_CreateTextureFromSurface(R, S);
+  SDL_RenderCopy(R, T, NULL, r);
+  SDL_DestroyTexture(T);
+  SDL_FreeSurface(S);
+
 }
 
 void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
@@ -83,18 +98,12 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
     textSurface = TTF_RenderText_Solid(F, SM->selectedCard->name, color0);
     dst.w = textSurface->w;
     dst.h = textSurface->h;
-    textTexture = SDL_CreateTextureFromSurface(R, textSurface);
-    SDL_RenderCopy(R, textTexture, NULL, &dst);
-    SDL_DestroyTexture(textTexture);
-    SDL_FreeSurface(textSurface);
+    _TSideMenu_priv_render(R, textTexture, &dst, textSurface);
 
     textSurface = TTF_RenderText_Solid(F, puntos, color0);
     dst.x += dst.w + 10;
     dst.w = textSurface->w;
-    textTexture = SDL_CreateTextureFromSurface(R, textSurface);
-    SDL_RenderCopy(R, textTexture, NULL, &dst);
-    SDL_DestroyTexture(textTexture);
-    SDL_FreeSurface(textSurface);
+    _TSideMenu_priv_render(R, textTexture, &dst, textSurface);
     // render selected card data
   }
 
@@ -105,10 +114,7 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
   dst.x = 10;
   dst.w = textSurface->w;
   dst.h = textSurface->h;
-  textTexture = SDL_CreateTextureFromSurface(R, textSurface);
-  SDL_RenderCopy(R, textTexture, NULL, &dst);
-  SDL_DestroyTexture(textTexture);
-  SDL_FreeSurface(textSurface);
+  _TSideMenu_priv_render(R, textTexture, &dst, textSurface);
 
   char def[6], exp[6], niv[6];
   sprintf(niv, "Lvl: %d", hero->nivel);
@@ -122,10 +128,7 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
   dst.x += 10;
   dst.y += dst.h + 10;
   dst.w = textSurface->w;
-  textTexture = SDL_CreateTextureFromSurface(R, textSurface);
-  SDL_RenderCopy(R, textTexture, NULL, &dst);
-  SDL_DestroyTexture(textTexture);
-  SDL_FreeSurface(textSurface);
+  _TSideMenu_priv_render(R, textTexture, &dst, textSurface);
 
   // Render selected space data if any
   int cT = SM->mapa->currTile;
@@ -161,19 +164,12 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
     textSurface = TTF_RenderText_Solid(F, message, color0);
     dst2.w = textSurface->w;
     dst2.h = textSurface->h;
-    textTexture = SDL_CreateTextureFromSurface(R, textSurface);
-    SDL_RenderCopy(R, textTexture, NULL, &dst2);
-    SDL_DestroyTexture(textTexture);
-    SDL_FreeSurface(textSurface);
+    _TSideMenu_priv_render(R, textTexture, &dst2, textSurface);
 
     textSurface = TTF_RenderText_Solid(F, puntos, color0);
     dst2.x += dst2.w + 10;
     dst2.w = textSurface->w;
-    textTexture = SDL_CreateTextureFromSurface(R, textSurface);
-    SDL_RenderCopy(R, textTexture, NULL, &dst2);
-
-    SDL_DestroyTexture(textTexture);
-    SDL_FreeSurface(textSurface);
+    _TSideMenu_priv_render(R, textTexture, &dst2, textSurface);
 
     // Render enemy if any
     if (SM->selectedSpace->enemy != NULL) {
@@ -184,12 +180,7 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
       textSurface = TTF_RenderText_Solid(F, enemy->name, color0);
       dst2.w = textSurface->w;
       dst2.h = textSurface->h;
-      textTexture = SDL_CreateTextureFromSurface(R, textSurface);
-      SDL_RenderCopy(R, textTexture, NULL, &dst2);
-      
-      SDL_DestroyTexture(textTexture);
-      SDL_FreeSurface(textSurface);
-
+      _TSideMenu_priv_render(R, textTexture, &dst2, textSurface);
       char at[4], def[4], exp[4];
       sprintf(at, "A: %d", enemy->ataque);
       sprintf(def, "D: %d", enemy->defensa);
@@ -204,13 +195,14 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
       textSurface = TTF_RenderText_Solid(F, wholeMess, color0);
       dst2.w = textSurface->w;
       dst2.h = textSurface->h;
-      textTexture = SDL_CreateTextureFromSurface(R, textSurface);
-      SDL_RenderCopy(R, textTexture, NULL, &dst2);
-      
-      SDL_DestroyTexture(textTexture);
-      SDL_FreeSurface(textSurface);
+      _TSideMenu_priv_render(R, textTexture, &dst2, textSurface);
     }
   }
 
   TButton_render(SM->button, R);
+}
+
+void TSideMenu_popTheHand(TSideMenu * M) {
+  TCardMano_sendToDiscard(M->cartas, M->selectedCard);  
+  TCardMano_takeFromAction(M->cartas, 1);
 }

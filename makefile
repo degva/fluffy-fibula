@@ -9,10 +9,14 @@ BLD=builds
 
 
 #OBJS specifies which files to compile as part of the project
-_OBJS = main.o capp.o menu.o tmap.o ttile.o tspace.o tbutton.o tentstr.o sidemenu.o mano.o action.o discard.o carta.o tlist.o theroe.o
+_OBJS = main.o capp.o menu.o tmap.o ttile.o tspace.o tbutton.o tentstr.o sidemenu.o mano.o action.o discard.o carta.o tlist.o theroe.o pelea.o
 OBJS=$(patsubst %,$(ODIR)/%,$(_OBJS))
 
 all: app
+
+# Pelea
+$(ODIR)/pelea.o: $(LDIR)/pelea.c
+	$(GCC) -o $@ -c $< -I$(LDIR) $(CFLAGS) $(LINKER_FLAGS)
 
 # Heroe
 $(ODIR)/theroe.o: $(LDIR)/theroe.c

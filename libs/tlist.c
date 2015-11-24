@@ -125,6 +125,35 @@ TNodo * TLista_takeNodo(TLista *L, int pos) {
   return nodo;
 }
 
+TNodo * TLista_takeNodoByElement(TLista * L, TElemento E) {
+  TNodo *ptrRec, *ptrAnt;
+
+  // if (TLista_estaVacia(L)) return;
+
+  ptrRec = L->inicio;
+  ptrAnt = NULL;
+  // Buscar el elemento en la lista
+  while (ptrRec != NULL && ptrRec->elem != E) {
+    ptrAnt = ptrRec;
+    ptrRec = ptrRec->sig;
+  }
+
+  if (ptrRec != NULL) {// Encontró el elemento a eliminar
+    if (ptrAnt == NULL) {// Es el primer elemento de la lista
+      L->inicio = L->inicio->sig;
+    }
+    if (ptrRec == L->fin) { // Es el último elemento de la lista
+      L->fin = ptrAnt;
+      if (L->fin != NULL) L->fin->sig = NULL;
+    } else if (ptrAnt != NULL) {
+      ptrAnt->sig = ptrRec->sig;
+    }
+    (L->numElem)--;
+  }
+
+  return ptrRec;
+}
+
 void TLista_putNodoIn(TLista *L, TNodo *N, int pos) {
   TNodo *nodo, *nodoAnt;
   int i;

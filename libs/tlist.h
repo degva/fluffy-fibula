@@ -35,6 +35,7 @@ void TLista_imprimir(TLista *);
 /* Cambia pointer de posicion */
 void TLista_swapNodos(TLista *, int i, int j);
 TNodo * TLista_takeNodo(TLista *L, int pos);
+TNodo * TLista_takeNodoByElement(TLista *L, TElemento);
 TNodo * TLista_pop(TLista  *L);
 #endif  /* LISTAST_H */
 

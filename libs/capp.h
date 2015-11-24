@@ -3,11 +3,12 @@
 
 #include "tlibs.h"
 #include "tmap.h"
-#include <menu.h>
-#include <sidemenu.h>
-#include <mano.h>
-#include <tentstr.h>
-#include <theroe.h>
+#include "menu.h"
+#include "sidemenu.h"
+#include "mano.h"
+#include "tentstr.h"
+#include "theroe.h"
+#include "pelea.h"
 
 typedef struct {
   bool Running;
@@ -32,6 +33,7 @@ CApp * CApp_new();
 bool Game_OnInit(CApp * C);
 int Game_OnExecute(CApp * C);
 void Game_OnEvent(CApp * C, SDL_Event * Event);
+void Game_moveHero(CApp * C);
 void Game_OnLoop(CApp * C);
 void Game_OnRender(CApp * C);
 void Game_OnCleanup();

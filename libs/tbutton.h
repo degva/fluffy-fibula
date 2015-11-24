@@ -19,7 +19,6 @@ typedef struct {
   int currentSprite;
   char * text;
   SDL_Texture *buttonText[BUTTON_SPRITE_TOTAL];
-  // SDL_Surface * buttonText; Deprecated
 } TButton;
 
 void TButton_init(TButton *, TTF_Font * , char *, SDL_Renderer * R);
