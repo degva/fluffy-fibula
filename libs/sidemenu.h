@@ -10,7 +10,7 @@
 
 typedef struct {
   TButton * button;
-  // SDL_Texture * background;
+  SDL_Texture * background;
   TMap * mapa;      // pointer to the map
   TCardMano * cartas;   // pointer to the hands
   THeroe * hero; // pointer to the hero

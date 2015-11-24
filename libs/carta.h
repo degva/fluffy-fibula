@@ -18,6 +18,6 @@ TCard * TCard_new(char *name, int points, int type, char *img, SDL_Renderer *);
 
 void TCard_modify_points (TCard * , int points);
 void TCard_selectToggle(TCard *);
-void TCard_render (TCard *, SDL_Renderer *, TCoord *);
+void TCard_render (TCard *, TCoord *, SDL_Renderer *);
 
 #endif	/* CARTA_H */

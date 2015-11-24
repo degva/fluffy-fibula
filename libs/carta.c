@@ -28,13 +28,13 @@ void TCard_selectToggle(TCard * C) {
   C->selected = !C->selected;
 }
 
-void TCard_render(TCard * C, SDL_Renderer * R, TCoord * Tc) {
+void TCard_render(TCard * C, TCoord * Tc, SDL_Renderer * R) {
 
   SDL_Rect dst;
   dst.x = Tc->x;
   dst.y = Tc->y;
-  dst.w = SPACESIZE;
-  dst.h = SPACESIZE;
+  dst.w = 32;
+  dst.h = 32;
 
   // printf(" - x: %d | y: %d | w: %d | h %d \n", dst.x, dst.y, dst.w, dst.h);
 

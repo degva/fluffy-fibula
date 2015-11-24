@@ -149,6 +149,10 @@ void TLista_putNodoIn(TLista *L, TNodo *N, int pos) {
 
 /* Cambia poitner de posicion */
 void TLista_swapNodos(TLista *L, int i, int j) {
+  if (i < 0)
+    i = 0;
+  if (j < 0)
+    j = 0;
   TNodo * nodo1 = TLista_takeNodo(L, i);
   TNodo * nodo2 = TLista_takeNodo(L, j);
   TLista_putNodoIn(L, nodo1, j);
@@ -158,5 +162,6 @@ void TLista_swapNodos(TLista *L, int i, int j) {
 TNodo * TLista_pop(TLista * L) {
   TNodo * nodo = L->inicio;
   L->inicio = L->inicio->sig;
+  L->numElem--;
   return nodo;
 }

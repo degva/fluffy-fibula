@@ -29,6 +29,7 @@ typedef struct {
   TCoord *coords[NUMBER_OF_TILES][SPACES_X_TILE];
   TTiles *tiles[NUMBER_OF_TILES];
   int currentTile;
+  SDL_Texture * background;
 } TMap;
 
 // Initialize a Map

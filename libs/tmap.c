@@ -3,11 +3,22 @@
 TMap * TMap_new(SDL_Renderer * R, TLista * E) {
   TMap * M;
   M = (TMap *) malloc(sizeof(TMap));
-  int i;
-  for (i=0; i<7; i++)
-    M->tiles[i] == NULL;
+ 
+  // call the background
+  SDL_Surface * surf;
+  surf = IMG_Load("img/b-map.png");
+  if (surf == NULL)
+    printf("Card image was not loaded!!");
+  M->background = SDL_CreateTextureFromSurface( R, surf );
+  SDL_FreeSurface(surf);
+
   // Set current Tile
   M->currentTile = 0;
+  
+  int i;
+  for (i=0; i<NUMBER_OF_TILES; i++) {
+    M->tiles[i] = NULL;
+  }
   // Attach it to the Map with the coordinates of the middle of the screen
 
   TMap_putNewTileCoords(M, VP1_W/2, VP1_H/2, R, TLista_pop(E)->elem);
@@ -103,6 +114,14 @@ void TMap_addNewTile(TMap * M, int pos, SDL_Renderer * R, TLista * E) {
 }
 
 void TMap_Render(TMap * M, SDL_Renderer * R) {
+  // Render background
+  SDL_Rect dst;
+  dst.x = 0;
+  dst.y = 0;
+  dst.w = 600;
+  dst.h = 600;
+  SDL_RenderCopy(R, M->background, NULL, &dst);
+
   int i;
   // Render each surface of each tile
   // Uses the coordinates to do this

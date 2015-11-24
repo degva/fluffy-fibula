@@ -55,6 +55,14 @@ void TCardMano_selectCard(TCardMano * M, int pos) {
   TCard_selectToggle(nodo->elem);
 }
 
-void TCardMano_render(TCardMano * M, TLista * Cds) {
-
+void TCardMano_render(TCardMano * M, TLista * Cds, SDL_Renderer * R) {
+  TNodo * coord;
+  coord = Cds->inicio;
+  TNodo * carta;
+  carta = M->list->inicio;
+  while (carta != NULL &&  coord != NULL) {
+    TCard_render(carta->elem, coord->elem, R);
+    carta = carta->sig;
+    coord = coord->sig;
+  }
 }

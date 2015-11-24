@@ -19,7 +19,7 @@ void TCardMano_takeFromAction(TCardMano *, int);
 void TCardMano_sendToDiscard(TCardMano *, int);
 void TCardMano_handleEvent(TCardMano *);
 void TCardMano_selectCard(TCardMano * M, int pos);
-void TCardMano_render(TCardMano *, TLista * Coord);
+void TCardMano_render(TCardMano *, TLista * Coord, SDL_Renderer *);
 
 
 
