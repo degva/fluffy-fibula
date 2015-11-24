@@ -19,6 +19,6 @@ typedef struct {
 
 void TTiles_init(TTiles*, SDL_Renderer *, TEnemy *);
 void TTiles_Render(TTiles *, SDL_Renderer *, TCoord * Tc[NUM_SPACES]);
-void TTiles_handleEvent(TTiles *, SDL_Event *, TCoord * Tc[NUM_SPACES]); 
+int TTiles_handleEvent(TTiles *, SDL_Event *, TCoord * Tc[NUM_SPACES], int * cS); 
 
 #endif

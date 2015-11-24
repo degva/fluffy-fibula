@@ -5,11 +5,11 @@
 #include <tentstr.h>
 
 enum tiposDeSpace {
-    PLAIN = 2,
-    FOREST = 3,
-    HILL = 4,
-    SWAMP = 5,
-    UNREACHABLE = 1000
+  PLAIN = 2,
+  FOREST = 3,
+  HILL = 4,
+  SWAMP = 5,
+  UNREACHABLE = 1000
 };
 
 enum mousePos {
@@ -19,15 +19,15 @@ enum mousePos {
 };
 
 typedef struct _TSpace {
-    bool descubierto;
-    int tipoDeSpace;
-    int currentSprite;
-    // TEnemy y TFriendStruc no pueden estar llenos a la vez
-    // uno debe estar en null
-    TEnemy * enemy;
-    // TFriendStruc * friend;
-    struct _TSpace * spaces[MAXSPACES];
-    SDL_Texture * texture[SPACE_TILE_TOTAL]; // We will use other in case of hover
+  bool descubierto;
+  int tipoDeSpace;
+  int currentSprite;
+  // TEnemy y TFriendStruc no pueden estar llenos a la vez
+  // uno debe estar en null
+  TEnemy * enemy;
+  // TFriendStruc * friend;
+  struct _TSpace * spaces[MAXSPACES];
+  SDL_Texture * texture[SPACE_TILE_TOTAL]; // We will use other in case of hover
 } TSpace;
 
 // Crea un space simple, de manera random
@@ -41,7 +41,7 @@ void TSpace_init(TSpace * S, SDL_Renderer * R, TEnemy *);
 void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Renderer * R);
 
 // Llamado por TMap_handleEvent
-void TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord);
+int TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord);
 
 
 #endif

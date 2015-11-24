@@ -58,6 +58,10 @@ void TSideMenu_handleEvent(TSideMenu * SM, SDL_Event * E) {
 }
 
 void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
+  // Color white for the text
+  SDL_Color color0 = {255,255,255};
+  SDL_Surface * textSurface;
+  SDL_Texture * textTexture;
   // Render background
   SDL_Rect dst;
   dst.x = 0;
@@ -70,9 +74,6 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
   TCardMano_render(SM->cartas, SM->cartasCoords, R);
   // Render selected card if any
   if (SM->selectedCard != NULL) {
-    SDL_Color color0 = {255,255,255};
-    SDL_Surface * textSurface;
-    SDL_Texture * textTexture;
 
     char puntos[2];
     sprintf(puntos, "%d", SM->selectedCard->points);
@@ -98,8 +99,50 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
   // Render Hero status
 
   // Render selected space data if any
+  int cT = SM->mapa->currTile;
+  int cS = SM->mapa->currSpace;
+  SM->selectedSpace =  ((TTiles *) SM->mapa->tiles[cT])->spaces[cS];
   if (SM->selectedSpace != NULL) {
+    SDL_Rect dst2;
+    dst2.y = 170 + 12 + 10;
+    dst2.x = 10;
     // render selected space
+    int tipo = ((TSpace *) SM->selectedSpace)->tipoDeSpace;
+    char puntos[2];
+    sprintf(puntos, "%d", tipo);
+
+    char * message;
+    switch (tipo) {
+      case PLAIN:
+        message = "Tipo Plano";
+        break;
+      case FOREST:
+        message = "Tipo Bosque";
+        break;
+      case HILL:
+        message = "Tipo Montanas";
+        break;
+      case SWAMP:
+        message = "Tipo Lagos";
+        break;
+      default:
+        message = "Tipo Inalcanzable";
+        break;
+    }
+    textSurface = TTF_RenderText_Solid(F, message, color0);
+    dst2.w = textSurface->w;
+    dst2.h = textSurface->h;
+    textTexture = SDL_CreateTextureFromSurface(R, textSurface);
+    SDL_RenderCopy(R, textTexture, NULL, &dst2);
+    
+    textSurface = TTF_RenderText_Solid(F, puntos, color0);
+    dst2.x += dst2.w + 10;
+    dst2.w = textSurface->w;
+    textTexture = SDL_CreateTextureFromSurface(R, textSurface);
+    SDL_RenderCopy(R, textTexture, NULL, &dst2);
+
+    SDL_DestroyTexture(textTexture);
+    SDL_FreeSurface(textSurface);
   }
 
   TButton_render(SM->button, R);

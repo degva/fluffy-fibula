@@ -12,9 +12,10 @@ TMap * TMap_new(SDL_Renderer * R, TLista * E) {
   M->background = SDL_CreateTextureFromSurface( R, surf );
   SDL_FreeSurface(surf);
 
-  // Set current Tile
-  M->currentTile = 0;
-  
+  // Set current Tile and currentSpace
+  M->currTile = 0;
+  M->currSpace = 0;
+  M->tileCount = 0;
   int i;
   for (i=0; i<NUMBER_OF_TILES; i++) {
     M->tiles[i] = NULL;
@@ -26,7 +27,7 @@ TMap * TMap_new(SDL_Renderer * R, TLista * E) {
 }
 
 void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R, TEnemy * E) {
-  int curTile = M->currentTile;
+  int currTile = M->tileCount;
   float goldNum = 0.76;
   // Create tile
   TTiles * tile;
@@ -34,7 +35,7 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R, TEnem
   TTiles_init(tile, R, E);
 
   // this is the first tile ( the one in the center )
-  M->tiles[curTile] = tile;
+  M->tiles[currTile] = tile;
   // put their coords
   // SPACE 0
   TCoord * coorT0 = malloc(sizeof(TCoord));
@@ -66,21 +67,21 @@ void TMap_putNewTileCoords(TMap * M, int posx, int posy, SDL_Renderer * R, TEnem
   coorT6->y = posy + goldNum*SPACESIZE + 1;
 
   // put Coordinates on the tiles
-  M->coords[curTile][0] = coorT0;
-  M->coords[curTile][1] = coorT1;
-  M->coords[curTile][2] = coorT2;
-  M->coords[curTile][3] = coorT3;
-  M->coords[curTile][4] = coorT4;
-  M->coords[curTile][5] = coorT5;
-  M->coords[curTile][6] = coorT6;
+  M->coords[currTile][0] = coorT0;
+  M->coords[currTile][1] = coorT1;
+  M->coords[currTile][2] = coorT2;
+  M->coords[currTile][3] = coorT3;
+  M->coords[currTile][4] = coorT4;
+  M->coords[currTile][5] = coorT5;
+  M->coords[currTile][6] = coorT6;
 
   // Put the tile in the current tposition
-  M->currentTile += 1;
+  M->tileCount += 1;
 }
 
 void TMap_addNewTile(TMap * M, int pos, SDL_Renderer * R, TLista * E) {
-  int posx = ((TCoord *) M->tiles[M->currentTile])->x;
-  int posy = ((TCoord *) M->tiles[M->currentTile])->y;
+  int posx = ((TCoord *) M->tiles[M->currTile])->x;
+  int posy = ((TCoord *) M->tiles[M->currTile])->y;
   int des = 1.2438;
   int new_posx, new_posy;
   // depending by where the heroe is going
@@ -134,13 +135,16 @@ void TMap_Render(TMap * M, SDL_Renderer * R) {
 }
 
 void TMap_handleEvent(TMap * M, SDL_Event * e) {
-  int i;
+  int i, r;
   // Call each the handler of each tile
   // uses the coordinates to do this
   for (i=0; i<NUMBER_OF_TILES; i++) {
     if (M->tiles[i] == NULL) {
       break;
     }
-    TTiles_handleEvent(M->tiles[i], e, M->coords[i]);
+    r = TTiles_handleEvent(M->tiles[i], e, M->coords[i], &M->currSpace);
+    if (r == 1) {
+      M->currTile = i;
+    }
   }
 }

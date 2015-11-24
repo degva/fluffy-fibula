@@ -28,7 +28,9 @@ enum tilePosition {
 typedef struct {
   TCoord *coords[NUMBER_OF_TILES][SPACES_X_TILE];
   TTiles *tiles[NUMBER_OF_TILES];
-  int currentTile;
+  int currTile;
+  int currSpace;
+  int tileCount;
   SDL_Texture * background;
 } TMap;
 

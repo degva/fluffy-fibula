@@ -3,7 +3,7 @@
 void TSpace_init(TSpace * S, SDL_Renderer * R, TEnemy * E) {
   int r = rand() % 5;
   S->descubierto = false;
-  S->tipoDeSpace = 0;
+  S->tipoDeSpace = r + 2;
   S->currentSprite = SPACE_TILE_OFF;
   S->enemy = E;
   // Load tile surface for normal
@@ -59,10 +59,10 @@ void TSpace_render(TSpace * Ts, TCoord * Tc, SDL_Renderer * R) {
   }
 }
 
-void TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord) {
+int TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord) {
   if (
       e->type == SDL_MOUSEMOTION
-      //|| e->type == SDL_MOUSEBUTTONDOWN
+      || e->type == SDL_MOUSEBUTTONDOWN
      ) {
     // Get mouse position
     int ex, ey;
@@ -92,12 +92,12 @@ void TSpace_handleEvent(TSpace * Ts, SDL_Event * e, TCoord * coord) {
         case SDL_MOUSEMOTION:
           Ts->currentSprite = SPACE_TILE_HOVER;
           break;
-          /*
-             case SDL_MOUSEBUTTONDOWN:
-             B->currentSprite = BUTTON_SPRITE_MOUSE_DOWN;
-             break;
-             */
+        case SDL_MOUSEBUTTONDOWN:
+          // Ts->currentSprite = BUTTON_SPRITE_MOUSE_DOWN;
+          return 1;
+          break;
       }
     }
   }
+  return 0;
 }

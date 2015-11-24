@@ -52,15 +52,21 @@ void TTiles_Render(TTiles * T, SDL_Renderer * S, TCoord * Tc[NUM_SPACES]) {
   //printf("\n\n");
 }
 
-void TTiles_handleEvent(TTiles * T, SDL_Event * e, TCoord * Tc[NUM_SPACES]) {
-  int i;
+int TTiles_handleEvent(TTiles * T, SDL_Event * e, TCoord * Tc[NUM_SPACES], int * cS) {
+  int i, r;
+  int R = 0;
   // Call each event of each space
   for (i=0; i<NUM_SPACES; i++) {
     // This might just say if it was indeed clicked and change its
     // sprite. So then this function should just return if either it was
     // clicked
-    TSpace_handleEvent(T->spaces[i], e, Tc[i]);
+    r = TSpace_handleEvent(T->spaces[i], e, Tc[i]);
       // In case it was indeed clicked, pass the space pointer (or integer id)
       // to show it's data in the details viewport
+    if (r == 1) {
+      *cS = i;
+      R = r;
+    }
   }
+  return R; 
 }
