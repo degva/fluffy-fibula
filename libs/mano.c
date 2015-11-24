@@ -10,7 +10,7 @@ TCardMano * TCardMano_new(SDL_Renderer * R, int level) {
   mano->discard = TCardDiscard_new(R);
   mano->level = 2;
 
-  TCardDiscard_shuffle(mano->discard);
+  //TCardDiscard_shuffle(mano->discard);
   TCardAction_takeFromDiscard(mano->action, mano->discard);
   TCardMano_takeFromAction(mano, level);
 

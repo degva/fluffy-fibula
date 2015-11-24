@@ -22,6 +22,9 @@ TMap * TMap_new(SDL_Renderer * R, TLista * E) {
   }
   // Attach it to the Map with the coordinates of the middle of the screen
 
+  M->actualTile = 0;
+  M->actualSpace = 0;
+
   TMap_putNewTileCoords(M, VP1_W/2, VP1_H/2, R, TLista_pop(E)->elem);
   return M;
 }

@@ -1,7 +1,8 @@
 #ifndef _CAPP_H_
 #define _CAPP_H_
 
-#include <tmap.h>
+#include "tlibs.h"
+#include "tmap.h"
 #include <menu.h>
 #include <sidemenu.h>
 #include <mano.h>

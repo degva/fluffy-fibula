@@ -20,15 +20,16 @@ THeroe * THeroe_new(SDL_Renderer * R){
 };
 
 void THeroe_render(THeroe * H, TCoord * Tc, SDL_Renderer * R) {
-
-  SDL_Rect dst;
-  dst.x = Tc->x;
-  dst.y = Tc->y;
-  dst.w = SPACESIZE;
-  dst.h = SPACESIZE;
-
-  SDL_RenderCopy(R, H->img, NULL, &dst);
   if (H->img == NULL) {
     printf("\t- ERROR In the img of heroe");
+  } else {
+
+    SDL_Rect dst;
+    dst.x = Tc->x;
+    dst.y = Tc->y;
+    dst.w = SPACESIZE;
+    dst.h = SPACESIZE;
+
+    SDL_RenderCopy(R, H->img, NULL, &dst);
   }
 }

@@ -9,7 +9,7 @@ CApp * CApp_new() {
   app->appRenderer = NULL;
   app->menu = NULL;
   app->map = NULL;
-  app->level = 2;
+  app->level = 5;
   return app;
 }
 
@@ -76,6 +76,8 @@ bool Game_OnInit(CApp * C) {
 void Game_OnEvent(CApp * C, SDL_Event * Event) {
   TMap_handleEvent(C->map, Event);
   TSideMenu_handleEvent(C->sidemenu, Event);
+  // TODO: pass to the fight lib the sidemenu
+  // and let it check if the button "pay" have been clicked
   if (Event->type == SDL_QUIT) {
     C->Running = false;
   }
@@ -90,6 +92,7 @@ void Game_OnRender(CApp * C) {
   viewPort1.h = VP1_H;
   SDL_RenderSetViewport(C->appRenderer, &viewPort1);
   TMap_Render(C->map, C->appRenderer);
+  THeroe_render(C->heroe, C->map->coords[C->map->actualTile][C->map->actualSpace], C->appRenderer);
 
   // Render the side Menu
   SDL_Rect viewPort2;

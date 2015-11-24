@@ -31,6 +31,8 @@ typedef struct {
   int currTile;
   int currSpace;
   int tileCount;
+  int actualTile; // The space where the Hero is currently in
+  int actualSpace; // The space where the Hero is currently in
   SDL_Texture * background;
 } TMap;
 

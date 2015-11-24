@@ -93,12 +93,39 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
     dst.w = textSurface->w;
     textTexture = SDL_CreateTextureFromSurface(R, textSurface);
     SDL_RenderCopy(R, textTexture, NULL, &dst);
-
     SDL_DestroyTexture(textTexture);
     SDL_FreeSurface(textSurface);
     // render selected card data
   }
+
   // Render Hero status
+  THeroe * hero = SM->hero;
+  textSurface = TTF_RenderText_Solid(F, hero->name, color0);
+  dst.y = 280;
+  dst.x = 10;
+  dst.w = textSurface->w;
+  dst.h = textSurface->h;
+  textTexture = SDL_CreateTextureFromSurface(R, textSurface);
+  SDL_RenderCopy(R, textTexture, NULL, &dst);
+  SDL_DestroyTexture(textTexture);
+  SDL_FreeSurface(textSurface);
+
+  char def[6], exp[6], niv[6];
+  sprintf(niv, "Lvl: %d", hero->nivel);
+  sprintf(exp, "Exp: %d", hero->exp);
+  sprintf(def, "Def: %d", hero->def);
+
+  char herStats[20];
+  sprintf(herStats, "%s %s %s", niv, exp, def);
+
+  textSurface = TTF_RenderText_Solid(F, herStats, color0);
+  dst.x += 10;
+  dst.y += dst.h + 10;
+  dst.w = textSurface->w;
+  textTexture = SDL_CreateTextureFromSurface(R, textSurface);
+  SDL_RenderCopy(R, textTexture, NULL, &dst);
+  SDL_DestroyTexture(textTexture);
+  SDL_FreeSurface(textSurface);
 
   // Render selected space data if any
   int cT = SM->mapa->currTile;
