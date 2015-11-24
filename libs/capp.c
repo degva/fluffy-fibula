@@ -13,6 +13,74 @@ CApp * CApp_new() {
   return app;
 }
 
+bool Game_OnInit(CApp * C) {
+  if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+    printf("Could not init SDL\n");
+    return false;
+  }
+
+  if (!SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" )) {
+    printf("Linear texture could not be enabled\n");
+    SDL_Quit();
+    return false;
+  }
+
+  // Init font things
+  if (TTF_Init() < 0) {
+    printf("Couldn't init TTF library");
+    SDL_Quit();
+    return false;
+  }
+
+  C->appWindow = SDL_CreateWindow(
+    "Cualquier cosa",
+    SDL_WINDOWPOS_UNDEFINED,
+    SDL_WINDOWPOS_UNDEFINED,
+    WIN_WIDTH, WIN_HEIGHT,
+    SDL_WINDOW_SHOWN
+  );
+  if (C->appWindow == NULL) {
+    SDL_Quit();
+    TTF_Quit();
+    return false;
+  }
+
+  C->appRenderer = SDL_CreateRenderer( C->appWindow, -1, SDL_RENDERER_ACCELERATED );
+  if (C->appRenderer == NULL) {
+    printf("Could not create Renderer");
+    SDL_Quit();
+    TTF_Quit();
+    return false;
+  }
+
+  // load Hack font
+  C->font = TTF_OpenFont("fonts/Hack.ttf", 16);
+  if (C->font == NULL) {
+    printf("Couldn't load Hack font, %s\n", TTF_GetError());
+    SDL_Quit();
+    TTF_Quit();
+    return false;
+  }
+
+  SDL_SetRenderDrawColor( C->appRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+  // Start IMG things!
+  if ( !( IMG_Init(IMG_INIT_PNG) ) ) {
+    printf("Could not start PNG libs!");
+    SDL_Quit();
+    TTF_Quit();
+    return false;
+  }
+  return true;
+}
+
+void Game_OnEvent(CApp * C, SDL_Event * Event) {
+  TMap_handleEvent(C->map, Event);
+  TSideMenu_handleEvent(C->sidemenu, Event);
+  if (Event->type == SDL_QUIT) {
+    C->Running = false;
+  }
+}
+
 void Game_OnRender(CApp * C) {
   // Render the map
   SDL_Rect viewPort1;
@@ -30,7 +98,7 @@ void Game_OnRender(CApp * C) {
   viewPort2.w = VP2_W;
   viewPort2.h = VP2_H;
   SDL_RenderSetViewport(C->appRenderer, &viewPort2);
-  TSideMenu_render(C->sidemenu, C->appRenderer);
+  TSideMenu_render(C->sidemenu, C->font, C->appRenderer);
 }
 
 int Game_OnExecute(CApp * C) {
@@ -92,74 +160,8 @@ int Game_OnExecute(CApp * C) {
   return 0;
 }
 
-bool Game_OnInit(CApp * C) {
-  if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-    printf("Could not init SDL\n");
-    return false;
-  }
-
-  if (!SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" )) {
-    printf("Linear texture could not be enabled\n");
-    SDL_Quit();
-    return false;
-  }
-
-  // Init font things
-  if (TTF_Init() < 0) {
-    printf("Couldn't init TTF library");
-    SDL_Quit();
-    return false;
-  }
-
-  C->appWindow = SDL_CreateWindow(
-    "Cualquier cosa",
-    SDL_WINDOWPOS_UNDEFINED,
-    SDL_WINDOWPOS_UNDEFINED,
-    WIN_WIDTH, WIN_HEIGHT,
-    SDL_WINDOW_SHOWN
-  );
-  if (C->appWindow == NULL) {
-    SDL_Quit();
-    TTF_Quit();
-    return false;
-  }
-
-  C->appRenderer = SDL_CreateRenderer( C->appWindow, -1, SDL_RENDERER_ACCELERATED );
-  if (C->appRenderer == NULL) {
-    printf("Could not create Renderer");
-    SDL_Quit();
-    TTF_Quit();
-    return false;
-  }
-
-  // load Hack font
-  C->font = TTF_OpenFont("fonts/Hack.ttf", 16);
-  if (C->font == NULL) {
-    printf("Couldn't load Hack font, %s\n", TTF_GetError());
-    SDL_Quit();
-    TTF_Quit();
-    return false;
-  }
-
-  SDL_SetRenderDrawColor( C->appRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-  // Start IMG things!
-  if ( !( IMG_Init(IMG_INIT_PNG) ) ) {
-    printf("Could not start PNG libs!");
-    SDL_Quit();
-    TTF_Quit();
-    return false;
-  }
-  return true;
-}
 
 void Game_OnCleanup() {
   SDL_Quit();
 }
 
-void Game_OnEvent(CApp * C, SDL_Event * Event) {
-  TMap_handleEvent(C->map, Event);
-  TSideMenu_handleEvent(C->sidemenu, Event);
-  if (Event->type == SDL_QUIT) {
-    C->Running = false;
-  }
-}

@@ -28,6 +28,34 @@ void TCard_selectToggle(TCard * C) {
   C->selected = !C->selected;
 }
 
+void TCard_handleEvent(TCard * C, TCoord * Tc, SDL_Event * E,  TCard ** p) {
+  if ( E->type == SDL_MOUSEBUTTONDOWN ) {
+    // Get mouse position
+    int x, y;
+    SDL_GetMouseState( &x, &y );
+
+    // Check if mouse is in button
+    bool inside = true;
+    // Mouse if left of the button
+    if (x < 600 + Tc->x) {
+      inside = false;
+    // mose is right of the button
+    } else if (x > 600 + Tc->x + 32) {
+      inside = false;
+    // mouse is above the button
+    } else if (y < Tc->y) {
+      inside = false;
+    } else if (y > Tc->y + 32) {
+      inside = false;
+    }
+
+    // Mouse is outside button
+    if (inside) {
+      *p = C;
+    }
+  }
+}
+
 void TCard_render(TCard * C, TCoord * Tc, SDL_Renderer * R) {
 
   SDL_Rect dst;

@@ -37,7 +37,18 @@ void TCardMano_sendToDiscard(TCardMano * mano, int num) {
   TCardDiscard_addElement(mano->discard, card->elem);
 }
 
-void handleEvent(TCardMano * M) {
+void TCardMano_handleEvent(TCardMano * M, TLista*L, SDL_Event * E, TCard ** p) {
+  TNodo * coord;
+  coord = L->inicio;
+  TNodo * carta;
+  carta = M->list->inicio;
+
+  while (carta != NULL && coord != NULL) {
+    TCard_handleEvent(carta->elem, coord->elem, E, &*p);
+    carta = carta->sig;
+    coord = coord->sig;
+  }
+
   if (TLista_tamanho(M->list) == 0 && TLista_tamanho(M->action->list)) {
     TCardDiscard_shuffle(M->discard);
     TCardAction_takeFromDiscard(M->action, M->discard);
