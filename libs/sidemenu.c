@@ -15,20 +15,20 @@ TSideMenu * TSideMenu_new(TTF_Font * F, THeroe * hero, TCardMano * cartas, TMap 
   sm->mapa = M;
   sm->cartas = cartas;
   sm->hero = hero;
-  
+
   sm->button = malloc(sizeof(TButton));
   TButton_init(sm->button, F , "Pagar", R);
   // Render pay button
   sm->button->pos_y = WIN_HEIGHT - sm->button->height - 11;
   sm->button->pos_x = 150 - sm->button->width/2;
 
-  
+
   sm->cartasCoords = malloc(sizeof(TLista));
   TLista_init(sm->cartasCoords);
-  
+
   sm->selectedCard = NULL;
   sm->selectedSpace = NULL;
-  
+
   int i, x, y;
   x = 11;
   y = 11;
@@ -85,7 +85,7 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
     dst.h = textSurface->h;
     textTexture = SDL_CreateTextureFromSurface(R, textSurface);
     SDL_RenderCopy(R, textTexture, NULL, &dst);
-    
+
     textSurface = TTF_RenderText_Solid(F, puntos, color0);
     dst.x += dst.w + 10;
     dst.w = textSurface->w;
@@ -134,7 +134,7 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
     dst2.h = textSurface->h;
     textTexture = SDL_CreateTextureFromSurface(R, textSurface);
     SDL_RenderCopy(R, textTexture, NULL, &dst2);
-    
+
     textSurface = TTF_RenderText_Solid(F, puntos, color0);
     dst2.x += dst2.w + 10;
     dst2.w = textSurface->w;
@@ -143,6 +143,39 @@ void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
 
     SDL_DestroyTexture(textTexture);
     SDL_FreeSurface(textSurface);
+
+    // Render enemy if any
+    if (SM->selectedSpace->enemy != NULL) {
+      dst2.x = 10;
+      dst2.y += dst2.h + 10;
+      TEnemy * enemy = SM->selectedSpace->enemy;
+
+      textSurface = TTF_RenderText_Solid(F, enemy->name, color0);
+      dst2.w = textSurface->w;
+      dst2.h = textSurface->h;
+      textTexture = SDL_CreateTextureFromSurface(R, textSurface);
+      SDL_RenderCopy(R, textTexture, NULL, &dst2);
+
+      char at[4], def[4], exp[4];
+      sprintf(at, "A: %d", enemy->ataque);
+      sprintf(def, "D: %d", enemy->defensa);
+      sprintf(exp, "E: %d", enemy->experiencia);
+
+      char wholeMess[14];
+      sprintf(wholeMess, "%s %s %s", at, def, exp);
+
+      dst2.x += 10;
+      dst2.y += dst2.h + 10;
+      
+      textSurface = TTF_RenderText_Solid(F, wholeMess, color0);
+      dst2.w = textSurface->w;
+      dst2.h = textSurface->h;
+      textTexture = SDL_CreateTextureFromSurface(R, textSurface);
+      SDL_RenderCopy(R, textTexture, NULL, &dst2);
+      
+      SDL_DestroyTexture(textTexture);
+      SDL_FreeSurface(textSurface);
+    }
   }
 
   TButton_render(SM->button, R);
