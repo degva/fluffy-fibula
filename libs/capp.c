@@ -99,6 +99,7 @@ void Game_moveHero(CApp * C) {
           C->heroe->exp += space->enemy->experiencia;
           C->heroe->nivel++;
           space->enemy = NULL; 
+          TSideMenu_popTheHand(C->sidemenu);
         } 
       }
       
