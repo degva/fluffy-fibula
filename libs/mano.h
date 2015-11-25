@@ -16,8 +16,8 @@ typedef struct {
 TCardMano * TCardMano_new(SDL_Renderer *, int);
 
 void TCardMano_takeFromAction(TCardMano *, int);
-void TCardMano_sendToDiscard(TCardMano *, TCard *);
-void TCardMano_handleEvent(TCardMano *, TLista *, SDL_Event *, TCard **);
+void TCardMano_sendToDiscard(TCardMano *, TLista * );
+void TCardMano_handleEvent(TCardMano *, TLista *, SDL_Event *, TLista *);
 void TCardMano_selectCard(TCardMano * M, int pos);
 void TCardMano_render(TCardMano *, TLista * Coord, SDL_Renderer *);
 

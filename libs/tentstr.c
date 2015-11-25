@@ -4,7 +4,7 @@ TEnemy * TEnemy_new(SDL_Renderer * R) {
   TEnemy * enemy;
   enemy = (TEnemy *) malloc(sizeof(TEnemy));
 
-  enemy->name = "Emiguito";
+  enemy->name = "Enemigo";
   enemy->ataque = rand() % 19 + 2; // from 2 to 20 Points
   enemy->defensa = enemy->ataque * 0.8; // 80% of its atack
   enemy->experiencia = enemy->ataque % enemy->defensa;

@@ -69,7 +69,7 @@ void TLista_eliminar(TLista *L, TElemento e) {
     } else if (ptrAnt != NULL) {
       ptrAnt->sig = ptrRec->sig;
     }
-    free(ptrRec);
+    // free(ptrRec); Quiero eliminar, pero BORRAR
     (L->numElem)--;
   }
 }

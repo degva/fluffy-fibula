@@ -36,6 +36,6 @@ void Game_OnEvent(CApp * C, SDL_Event * Event);
 void Game_moveHero(CApp * C);
 void Game_OnLoop(CApp * C);
 void Game_OnRender(CApp * C);
-void Game_OnCleanup();
+void Game_OnCleanup(CApp * C);
 
 #endif

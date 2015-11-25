@@ -32,19 +32,23 @@ void TCardMano_takeFromAction(TCardMano * mano, int num) {
   }
 }
 
-void TCardMano_sendToDiscard(TCardMano * mano, TCard * c) {
-  TNodo * card = TLista_takeNodoByElement(mano->list, c);
-  TCardDiscard_addElement(mano->discard, card->elem);
+void TCardMano_sendToDiscard(TCardMano * mano, TLista * cards) {
+  TNodo * nodo = cards->inicio;
+  while (nodo != NULL) {
+    TNodo * card = TLista_takeNodoByElement(mano->list, nodo->elem);
+    TCardDiscard_addElement(mano->discard, card->elem);
+    nodo = nodo->sig;
+  }
 }
 
-void TCardMano_handleEvent(TCardMano * M, TLista*L, SDL_Event * E, TCard ** p) {
+void TCardMano_handleEvent(TCardMano * M, TLista*L, SDL_Event * E, TLista * selCard) {
   TNodo * coord;
   coord = L->inicio;
   TNodo * carta;
   carta = M->list->inicio;
 
   while (carta != NULL && coord != NULL) {
-    TCard_handleEvent(carta->elem, coord->elem, E, &*p);
+    TCard_handleEvent(carta->elem, coord->elem, E, selCard);
     carta = carta->sig;
     coord = coord->sig;
   }

@@ -17,8 +17,9 @@ typedef struct {
   TCardMano * cartas;   // pointer to the hands
   THeroe * hero;        // pointer to the hero
   TLista * cartasCoords;
-  
-  TCard * selectedCard; // pointer to the selected card to be renderer
+ 
+  TLista * selectedCards;
+  //TCard * selectedCard; // pointer to the selected card to be renderer
   TSpace * selectedSpace;
 } TSideMenu;
 

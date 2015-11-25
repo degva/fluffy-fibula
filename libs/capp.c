@@ -76,21 +76,25 @@ bool Game_OnInit(CApp * C) {
 void Game_moveHero(CApp * C) {
   // Move if only the button pay has been clicked
   TSideMenu * sM = C->sidemenu;
-  if (sM->paid == true && sM->selectedCard != NULL) { 
+  if (sM->paid == true && !TLista_estaVacia(sM->selectedCards)) { 
     // check if the card was move and also the selected space is 
     // near the actual space
     int cT = C->map->currTile;
     int cS = C->map->currSpace;
     TSpace * space =  ((TTiles *) C->map->tiles[cT])->spaces[cS];
-    TCard * card = sM->selectedCard;
-    if (card->type == 1 && card->points >= space->tipoDeSpace) {
-      C->map->actualTile = cT;
-      C->map->actualSpace = cS;
-      // should pop by the selected card, no select card*
-      TSideMenu_popTheHand(C->sidemenu);
+    TNodo * nodo = sM->selectedCards->inicio;
+    while (nodo != NULL) {
+      TCard * card = nodo->elem;
+      if (card->type == 1 && space->tipoDeSpace != 6 && card->points >= space->tipoDeSpace) {
+        C->map->actualTile = cT;
+        C->map->actualSpace = cS;
+        // should pop by the selected card, no select card*
+        TSideMenu_popTheHand(C->sidemenu);
+      }
+      nodo = nodo->sig;
     }
     sM->paid = false;
-    sM->selectedCard = NULL;
+    TLista_init(sM->selectedCards);
   }
 }
 
@@ -183,10 +187,21 @@ int Game_OnExecute(CApp * C) {
     SDL_RenderClear( C->appRenderer );
   }
   return 0;
+  Game_OnCleanup(C);
 }
 
 
-void Game_OnCleanup() {
+void Game_OnCleanup(CApp * C) {
+  SDL_DestroyWindow(C->appWindow);
+  SDL_DestroyRenderer(C->appRenderer);
   SDL_Quit();
+  TTF_Quit();
+
+  free(C->menu);
+  free(C->map);
+  free(C->heroe);
+  free(C->sidemenu);
+  free(C->mano);
+  free(C->entities);
 }
 
