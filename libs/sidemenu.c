@@ -101,7 +101,7 @@ void _TSideMenu_priv_takeCardValues(TSideMenu * SM, int * m, int * a, int * d, i
 
 void TSideMenu_render(TSideMenu * SM, TTF_Font * F, SDL_Renderer * R) {
   // Color white for the text
-  SDL_Color color0 = {255,255,0,0};
+  SDL_Color color0 = {255,50,50,0};
   SDL_Surface * textSurface;
   SDL_Texture * textTexture;
   // Render background

@@ -1,4 +1,4 @@
-#include <capp.h>
+#include "capp.h"
 
 /* Game related functions */
 CApp * CApp_new() {
@@ -85,12 +85,23 @@ void Game_moveHero(CApp * C) {
     TNodo * nodo = sM->selectedCards->inicio;
     while (nodo != NULL) {
       TCard * card = nodo->elem;
+      
       if (card->type == 1 && space->tipoDeSpace != 6 && card->points >= space->tipoDeSpace) {
         C->map->actualTile = cT;
         C->map->actualSpace = cS;
         // should pop by the selected card, no select card*
         TSideMenu_popTheHand(C->sidemenu);
       }
+
+      if (card->type == 2 && space->enemy != NULL) {
+        int ataque = card->points;
+        if (TFight_heroVsEnemy(C->heroe, space->enemy, ataque)) {
+          C->heroe->exp += space->enemy->experiencia;
+          C->heroe->nivel++;
+          space->enemy = NULL; 
+        } 
+      }
+      
       nodo = nodo->sig;
     }
     sM->paid = false;
